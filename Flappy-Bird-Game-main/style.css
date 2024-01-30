@@ -21,7 +21,7 @@ body {
    width: 130px;
    position: fixed;
    top: 40vh;
-   left: 30vw;
+   left: 10vw;
    z-index: 100;
 }
 .pipe_sprite {
