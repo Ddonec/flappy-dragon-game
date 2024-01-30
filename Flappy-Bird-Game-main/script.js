@@ -119,7 +119,7 @@ function play() {
 
       if (isJumping) {
          img.src = "images/DRAKON_LITTLE_2.png";
-         bird_dy = -7.6;
+         bird_dy = -5;
          isJumping = false;
       }
 
