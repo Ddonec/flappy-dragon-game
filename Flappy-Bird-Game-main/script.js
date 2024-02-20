@@ -1,9 +1,14 @@
-let move_speed = 3,
-   gravity = 0.3;
+// let move_speed = 10;
+// const fixedMoveSpeed = 5;
+let gravity = 0.3;
 let bird = document.querySelector(".bird");
 let img = document.getElementById("bird-1");
 // let sound_point = new Audio("sounds effect/point.mp3");
 // let sound_die = new Audio("sounds effect/die.mp3");
+
+let move_speed = 0.005; // Скорость будет относительной ширине экрана
+let fixedMoveSpeed = move_speed * window.innerWidth; // Рассчитываем фиксированную скорость
+
 
 let bird_props = bird.getBoundingClientRect();
 let background = document.querySelector(".background").getBoundingClientRect();
@@ -16,34 +21,34 @@ img.style.display = "none";
 message.classList.add("messageStyle");
 
 let isJumping = false;
+let isGameOver = false; // добавляем переменную для отслеживания статуса игры
 
 document.body.addEventListener("touchstart", function (e) {
-    console.log("Ты тапнул по экрану!");
- 
-    if (e.touches.length > 0 && game_state != "Play") {
-       document.querySelectorAll(".pipe_sprite").forEach((elem) => {
-          elem.remove();
-       });
-       img.style.display = "block";
-       bird.style.top = "20vh";
-       game_state = "Play";
-       message.innerHTML = "";
-       score_title.innerHTML = "Score : ";
-       score_val.innerHTML = "0";
-       message.classList.remove("messageStyle");
-       play();
-    }
- 
-    if (e.touches.length > 0) {
-       isJumping = true;
-       img.src = "images/DRAKON_LITTLE_2.png";
-    }
- });
- 
- document.addEventListener("touchend", (e) => {
-      img.src = "images/DRAKON_LITTLE_1.png";
- });
- 
+   console.log("Ты тапнул по экрану!");
+
+   if (e.touches.length > 0 && game_state != "Play") {
+      document.querySelectorAll(".pipe_sprite").forEach((elem) => {
+         elem.remove();
+      });
+      img.style.display = "block";
+      bird.style.top = "20vh";
+      game_state = "Play";
+      message.innerHTML = "";
+      score_title.innerHTML = "Score : ";
+      score_val.innerHTML = "0";
+      message.classList.remove("messageStyle");
+      play();
+   }
+
+   if (e.touches.length > 0) {
+      isJumping = true;
+      img.src = "images/DRAKON_LITTLE_2.png";
+   }
+});
+
+document.addEventListener("touchend", (e) => {
+   img.src = "images/DRAKON_LITTLE_1.png";
+});
 
 document.addEventListener("keydown", handleKeyPress);
 document.addEventListener("keyup", handleKeyPress);
@@ -77,8 +82,12 @@ function handleKeyPress(e) {
 }
 
 function play() {
+   isGameOver = false;
+
    function move() {
       if (game_state != "Play") return;
+
+      // Устанавливаем фиксированную скорость движения препятствий
 
       let pipe_sprite = document.querySelectorAll(".pipe_sprite");
       pipe_sprite.forEach((element) => {
@@ -97,14 +106,16 @@ function play() {
                game_state = "End";
                message.innerHTML = "Game Over".fontcolor("red") + "<br>Press Enter or Space To Restart";
                message.classList.add("messageStyle");
-            //    sound_die.play();
+               isGameOver = true; // Устанавливаем переменную состояния игры в true
+               //    sound_die.play();
                return;
             } else {
-               if (pipe_sprite_props.right < bird_props.left && pipe_sprite_props.right + move_speed >= bird_props.left && element.increase_score == "1") {
+               if (pipe_sprite_props.right < bird_props.left && pipe_sprite_props.right + fixedMoveSpeed >= bird_props.left && element.increase_score == "1") {
                   score_val.innerHTML = +score_val.innerHTML + 1;
-                //   sound_point.play();
+                  //   sound_point.play();
                }
-               element.style.left = pipe_sprite_props.left - move_speed + "px";
+               
+               element.style.left = pipe_sprite_props.left - fixedMoveSpeed + "px";
             }
          }
       });
@@ -119,7 +130,7 @@ function play() {
 
       if (isJumping) {
          img.src = "images/DRAKON_LITTLE_2.png";
-         bird_dy = -5;
+         bird_dy = -6;
          isJumping = false;
       }
 
@@ -143,7 +154,7 @@ function play() {
    function create_pipe() {
       if (game_state != "Play") return;
 
-      setInterval(() => {
+      let pipeInterval = setInterval(() => {
          if (pipe_separation > 200) {
             pipe_separation = 0;
 
@@ -163,7 +174,12 @@ function play() {
             document.body.appendChild(pipe_sprite);
          }
          pipe_separation++;
-      }, 20); //  Как часто вызывать колонны
+
+         if (isGameOver) {
+            // проверяем переменную состояния игры
+            clearInterval(pipeInterval); // Останавливаем интервал, если игра закончилась
+         }
+      }, 10); //  Как часто вызывать колонны
    }
    requestAnimationFrame(create_pipe);
 }
