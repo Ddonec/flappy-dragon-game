@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Document</title>
+   </head>
+   <style>
+      html,
+      body {
+         margin: 0px;
+         width: 100%;
+         height: 100%;
+         overflow: hidden;
+         background-color: #ffffff;
+      }
+
+      #canvasContainer {
+         margin: 0px;
+         width: 100%;
+         height: 100%;
+      }
+
+      #textInputSpan {
+         position: absolute;
+         color: #000000;
+         font-family: sans-serif;
+      }
+   </style>
+   <body>
+      <div id="canvasContainer"></div>
+      <span id="textInputSpan">
+         Your name (max 8 chars) :
+         <input id="textInput" maxlength="10" type="text" width="150" />
+         <button onclick="changeText()">GO!</button>
+      </span>
+   </body>
+   <script src="dragon.js"></script>
+</html>
