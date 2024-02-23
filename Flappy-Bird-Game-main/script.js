@@ -23,9 +23,6 @@ let isJumping = false;
 let isGameOver = false; // добавляем переменную для отслеживания статуса игры
 
 let stoneImages = [
-   "KAMEN_1.png",
-   "KAMEN_2.png",
-   "KAMEN_3.png",
    "KAMEN_4.png",
    "KAMEN_5.png",
    "KAMEN_6.png",
@@ -137,49 +134,55 @@ function play() {
    }
    requestAnimationFrame(move);
 
-   let bird_dy = 0;
    function create_pipe() {
       if (game_state != "Play") return;
-   
+  
       let pipeInterval = setInterval(() => {
-         if (pipe_separation > 200) {
-            pipe_separation = 0;
+          if (pipe_separation > 200) {
+              pipe_separation = 0;
+  
+              let pipe_posi = Math.floor(Math.random() * 43) + 8;
+  
+              // Создаем контейнеры для труб
+              let pipe_sprite_inv = document.createElement("div");
+              pipe_sprite_inv.className = "pipe_sprite";
+              pipe_sprite_inv.style.top = pipe_posi - 20 + "vh";
+              pipe_sprite_inv.style.left = "100vw";
+              document.body.appendChild(pipe_sprite_inv);
+  
+              let pipe_sprite = document.createElement("div");
+              pipe_sprite.className = "pipe_sprite";
+              pipe_sprite.style.top = pipe_posi + pipe_gap + "vh";
+              pipe_sprite.style.left = "100vw";
+              pipe_sprite.increase_score = "1";
+              document.body.appendChild(pipe_sprite);
+  
+              // Создаем изображение внутри каждого контейнера трубы
+              let pipe_image_inv = document.createElement("img");
+              let randomStoneImage = stoneImages[Math.floor(Math.random() * stoneImages.length)];
+              pipe_image_inv.src = `images/stones/${randomStoneImage}`;
+              pipe_image_inv.style.height = "120%";
+              pipe_image_inv.style.position = "relative";
+              pipe_image_inv.style.top = "-10%";
+              pipe_sprite_inv.appendChild(pipe_image_inv);
+  
+              let pipe_image = document.createElement("img");
+              let randomStoneImage2 = stoneImages[Math.floor(Math.random() * stoneImages.length)];
+              pipe_image.src = `images/stones/${randomStoneImage2}`;
+              pipe_image.style.height = "120%";
+              pipe_image.style.position = "relative";
+              pipe_image.style.bottom = "-10%";
+              pipe_sprite.appendChild(pipe_image);
+          }
+          pipe_separation++;
+  
+          if (isGameOver) {
+              clearInterval(pipeInterval);
+          }
+      }, 40);
+  }
    
-            let pipe_posi = Math.floor(Math.random() * 43) + 8;
-            let pipe_sprite_inv = document.createElement("div");
-            pipe_sprite_inv.className = "pipe_sprite";
-            pipe_sprite_inv.style.top = pipe_posi - 70 + "vh";
-            pipe_sprite_inv.style.left = "100vw";
-   
-            // Выбираем случайное имя файла из папки images/stones
-            let randomStoneImage = stoneImages[Math.floor(Math.random() * stoneImages.length)];
-   
-            // Присваиваем случайное имя файлу фотографии каждой трубы
-            pipe_sprite_inv.style.backgroundImage = `url('images/stones/${randomStoneImage}')`;
-   
-            document.body.appendChild(pipe_sprite_inv);
-            let pipe_sprite = document.createElement("div");
-            pipe_sprite.className = "pipe_sprite";
-            pipe_sprite.style.top = pipe_posi + pipe_gap + "vh";
-            pipe_sprite.style.left = "100vw";
-            pipe_sprite.increase_score = "1";
-   
-            // Выбираем случайное имя файла из папки images/stones
-            let randomStoneImage2 = stoneImages[Math.floor(Math.random() * stoneImages.length)];
-   
-            // Присваиваем случайное имя файлу фотографии каждой трубы
-            pipe_sprite.style.backgroundImage = `url('images/stones/${randomStoneImage2}')`;
-   
-            document.body.appendChild(pipe_sprite);
-         }
-         pipe_separation++;
-   
-         if (isGameOver) {
-            clearInterval(pipeInterval);
-         }
-      }, 10);
-   }
-   
+
    
    requestAnimationFrame(create_pipe);
 }

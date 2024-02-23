@@ -37,8 +37,8 @@ body {
 .pipe_sprite {
    height: 70vh;
    width: 6vw;
-   width: fit-content; 
-   height: fit-content; 
+   /* width: fit-content; 
+   height: fit-content;  */
    border: 2px solid black; /* Обводка черного цвета шириной 2px */
    border-radius: 10px; /* Закругленные углы контейнера */
    overflow: hidden; /* Обрезать содержимое контейнера, которое выходит за его границы */
@@ -47,9 +47,15 @@ body {
 }
 
 .pipe_sprite img {
-   display: block; /* Сделать изображение блочным элементом */
-
-   height: 100%; /* Автоматическая высота для сохранения пропорций изображения */
+      height: 120%;
+      position: relative;
+      top: -10%;
+      width: 321%;
+      left: 50%;
+      transform: translateX(-50%);
+}
+body > .pipe_sprite:nth-child(even) > img {
+   transform: scaleY(-1) translateX(-50%);
 }
 
 .message {
