@@ -1,14 +1,13 @@
 // let move_speed = 10;
 // const fixedMoveSpeed = 5;
-let gravity = 0.3;
+let gravity = 0;
 let bird = document.querySelector(".bird");
 let img = document.getElementById("bird-1");
 // let sound_point = new Audio("sounds effect/point.mp3");
 // let sound_die = new Audio("sounds effect/die.mp3");
 
-let move_speed = 0.005; // Скорость будет относительной ширине экрана
+let move_speed = 0.001; // Скорость будет относительной ширине экрана
 let fixedMoveSpeed = move_speed * window.innerWidth; // Рассчитываем фиксированную скорость
-
 
 let bird_props = bird.getBoundingClientRect();
 let background = document.querySelector(".background").getBoundingClientRect();
@@ -22,6 +21,16 @@ message.classList.add("messageStyle");
 
 let isJumping = false;
 let isGameOver = false; // добавляем переменную для отслеживания статуса игры
+
+let stoneImages = [
+   "KAMEN_1.png",
+   "KAMEN_2.png",
+   "KAMEN_3.png",
+   "KAMEN_4.png",
+   "KAMEN_5.png",
+   "KAMEN_6.png",
+   "KAMEN_7.png"
+];
 
 document.body.addEventListener("touchstart", function (e) {
    console.log("Ты тапнул по экрану!");
@@ -82,10 +91,13 @@ function handleKeyPress(e) {
 }
 
 function play() {
-   isGameOver = false;
+   // isGameOver = false;
+   let pipe_separation = 0; // Объявляем переменную pipe_separation здесь
+   let pipe_gap = 65; // Объявляем переменную pipe_gap здесь
+
 
    function move() {
-      if (game_state != "Play") return;
+      // if (game_state != "Play") return;
 
       // Устанавливаем фиксированную скорость движения препятствий
 
@@ -97,24 +109,26 @@ function play() {
          if (pipe_sprite_props.right <= 0) {
             element.remove();
          } else {
-            if (
-               bird_props.left < pipe_sprite_props.left + pipe_sprite_props.width &&
-               bird_props.left + bird_props.width > pipe_sprite_props.left &&
-               bird_props.top < pipe_sprite_props.top + pipe_sprite_props.height &&
-               bird_props.top + bird_props.height > pipe_sprite_props.top
-            ) {
-               game_state = "End";
-               message.innerHTML = "Game Over".fontcolor("red") + "<br>Press Enter or Space To Restart";
-               message.classList.add("messageStyle");
-               isGameOver = true; // Устанавливаем переменную состояния игры в true
-               //    sound_die.play();
-               return;
-            } else {
+            // if (
+            //    bird_props.left < pipe_sprite_props.left + pipe_sprite_props.width &&
+            //    bird_props.left + bird_props.width > pipe_sprite_props.left &&
+            //    bird_props.top < pipe_sprite_props.top + pipe_sprite_props.height &&
+            //    bird_props.top + bird_props.height > pipe_sprite_props.top
+            // ) {
+            //    game_state = "End";
+            //    message.innerHTML = "Game Over".fontcolor("red") + "<br>Press Enter or Space To Restart";
+            //    message.classList.add("messageStyle");
+            //    isGameOver = true; // Устанавливаем переменную состояния игры в true
+            //    //    sound_die.play();
+            //    return;
+            // }
+            //  else
+            {
                if (pipe_sprite_props.right < bird_props.left && pipe_sprite_props.right + fixedMoveSpeed >= bird_props.left && element.increase_score == "1") {
                   score_val.innerHTML = +score_val.innerHTML + 1;
                   //   sound_point.play();
                }
-               
+
                element.style.left = pipe_sprite_props.left - fixedMoveSpeed + "px";
             }
          }
@@ -124,62 +138,48 @@ function play() {
    requestAnimationFrame(move);
 
    let bird_dy = 0;
-   function apply_gravity() {
-      if (game_state != "Play") return;
-      bird_dy = bird_dy + gravity;
-
-      if (isJumping) {
-         img.src = "images/DRAKON_LITTLE_2.png";
-         bird_dy = -6;
-         isJumping = false;
-      }
-
-      if (bird_props.top <= 0 || bird_props.bottom >= background.bottom) {
-         game_state = "End";
-         message.style.left = "28vw";
-         window.location.reload();
-         message.classList.remove("messageStyle");
-         return;
-      }
-
-      bird.style.top = bird_props.top + bird_dy + "px";
-      bird_props = bird.getBoundingClientRect();
-      requestAnimationFrame(apply_gravity);
-   }
-   requestAnimationFrame(apply_gravity);
-
-   let pipe_separation = 5;
-   let pipe_gap = 65;
-
    function create_pipe() {
       if (game_state != "Play") return;
-
+   
       let pipeInterval = setInterval(() => {
          if (pipe_separation > 200) {
             pipe_separation = 0;
-
+   
             let pipe_posi = Math.floor(Math.random() * 43) + 8;
             let pipe_sprite_inv = document.createElement("div");
             pipe_sprite_inv.className = "pipe_sprite";
             pipe_sprite_inv.style.top = pipe_posi - 70 + "vh";
             pipe_sprite_inv.style.left = "100vw";
-
+   
+            // Выбираем случайное имя файла из папки images/stones
+            let randomStoneImage = stoneImages[Math.floor(Math.random() * stoneImages.length)];
+   
+            // Присваиваем случайное имя файлу фотографии каждой трубы
+            pipe_sprite_inv.style.backgroundImage = `url('images/stones/${randomStoneImage}')`;
+   
             document.body.appendChild(pipe_sprite_inv);
             let pipe_sprite = document.createElement("div");
             pipe_sprite.className = "pipe_sprite";
             pipe_sprite.style.top = pipe_posi + pipe_gap + "vh";
             pipe_sprite.style.left = "100vw";
             pipe_sprite.increase_score = "1";
-
+   
+            // Выбираем случайное имя файла из папки images/stones
+            let randomStoneImage2 = stoneImages[Math.floor(Math.random() * stoneImages.length)];
+   
+            // Присваиваем случайное имя файлу фотографии каждой трубы
+            pipe_sprite.style.backgroundImage = `url('images/stones/${randomStoneImage2}')`;
+   
             document.body.appendChild(pipe_sprite);
          }
          pipe_separation++;
-
+   
          if (isGameOver) {
-            // проверяем переменную состояния игры
-            clearInterval(pipeInterval); // Останавливаем интервал, если игра закончилась
+            clearInterval(pipeInterval);
          }
-      }, 10); //  Как часто вызывать колонны
+      }, 10);
    }
+   
+   
    requestAnimationFrame(create_pipe);
 }

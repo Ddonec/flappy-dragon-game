@@ -30,9 +30,28 @@ body {
    left: 100vw;
    height: 70vh;
    width: 6vw;
-   background: gray;
+   /* background: gray; */
    border: 3px solid white;
 }
+
+.pipe_sprite {
+   height: 70vh;
+   width: 6vw;
+   width: fit-content; 
+   height: fit-content; 
+   border: 2px solid black; /* Обводка черного цвета шириной 2px */
+   border-radius: 10px; /* Закругленные углы контейнера */
+   overflow: hidden; /* Обрезать содержимое контейнера, которое выходит за его границы */
+   background-position: center;
+   background-size: cover;
+}
+
+.pipe_sprite img {
+   display: block; /* Сделать изображение блочным элементом */
+
+   height: 100%; /* Автоматическая высота для сохранения пропорций изображения */
+}
+
 .message {
    position: absolute;
    z-index: 10;
