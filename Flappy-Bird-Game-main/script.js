@@ -18,11 +18,11 @@ let bird_props = bird.getBoundingClientRect();
 let background = document.querySelector(".background").getBoundingClientRect();
 let score_val = document.querySelector(".score_val");
 let message = document.querySelector(".message");
+let losemessage = document.querySelector(".losemessage");
 let score_title = document.querySelector(".score_title");
 
 let game_state = "Start";
 img.style.display = "none";
-message.classList.add("messageStyle");
 
 let isJumping = false;
 let isGameOver = false; // добавляем переменную для отслеживания статуса игры
@@ -73,6 +73,7 @@ function handleKeyPress(e) {
 
 function play() {
    isGameOver = false;
+   bird.style.top = "30vh";
 
    function move() {
       if (game_state != "Play") return;
@@ -94,8 +95,7 @@ function play() {
                bird_props.top + bird_props.height > pipe_sprite_props.top
             ) {
                game_state = "End";
-               message.innerHTML = "Game Over".fontcolor("red") + "<br>Press Enter or Space To Restart" + '<button onclick="goToMenu()">Menu</button>';
-               message.classList.add("messageStyle");
+               losemessage.classList.remove("none");
                isGameOver = true; // Устанавливаем переменную состояния игры в true
                //    sound_die.play();
 
@@ -129,7 +129,6 @@ function play() {
          game_state = "End";
          message.style.left = "28vw";
          window.location.reload();
-         message.classList.remove("messageStyle");
          return;
       }
 
@@ -193,12 +192,16 @@ function play() {
 
 function StartRound() {
    img.style.display = "block";
-   bird.style.top = "20vh";
+   bird.style.top = "30vh";
    game_state = "Play";
-   message.innerHTML = "";
    score_title.innerHTML = "Score : ";
    score_val.innerHTML = "0";
-   message.classList.remove("messageStyle");
+   message.classList.add("none");
+   img.style.opacity = 1;
+
+
+   // Установка позиции птицы и изменение состояния игры
+   // должны быть выполнены перед вызовом play()
    play();
 }
 
@@ -210,7 +213,6 @@ const hardBtn = document.querySelector("button:nth-of-type(4)");
 
 // Добавляем обработчики событий для каждой кнопки
 trainingBtn.addEventListener("click", () => {
-   move_speed = 10;
    pipe_gap = 50;
    StartRound();
 });
@@ -240,4 +242,15 @@ hardBtn.addEventListener("click", () => {
 
 function goToMenu() {
    message.classList.remove("none");
+   losemessage.classList.add("none");
+   img.style.opacity = 0;
+   resetGame(); // Добавлен сброс состояния игры и переменных
+   bird.style.top = "30vh";
+   bird_props = bird.getBoundingClientRect();
+}
+
+function resetGame() {
+   isJumping = false;
+   isGameOver = false;
+   game_state = "Start";
 }

@@ -56,7 +56,8 @@ body > .pipe_sprite:nth-child(even) > img {
    transform: scaleY(-1) translateX(-50%);
 }
 
-.message {
+.message,
+.losemessage {
    position: absolute;
    z-index: 10;
    color: black;
@@ -68,8 +69,16 @@ body > .pipe_sprite:nth-child(even) > img {
    display: flex;
    flex-direction: column;
    gap: 3vh;
+
+   background: white;
+   padding: 30px;
+   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+   border-radius: 5%;
 }
 .message > button {
+   padding: 1vh 0;
+}
+.losemessage > button {
    padding: 1vh 0;
 }
 .messageStyle {
@@ -95,6 +104,9 @@ body > .pipe_sprite:nth-child(even) > img {
 .score_val {
    color: gold;
    font-weight: bold;
+}
+.none {
+   display: none;
 }
 @media only screen and (max-width: 1080px) {
    .message {
