@@ -1,27 +1,33 @@
 // let move_speed = 10;
 // const fixedMoveSpeed = 5;
-let gravity = 0.3;
 let bird = document.querySelector(".bird");
 let img = document.getElementById("bird-1");
 // let sound_point = new Audio("sounds effect/point.mp3");
 // let sound_die = new Audio("sounds effect/die.mp3");
 
+let gravity = 0.35;
+let pipe_gap = 55; // Объявляем переменную pipe_gap здесь
 let move_speed = 0.005; // Скорость будет относительной ширине экрана
-let fixedMoveSpeed = move_speed * window.innerWidth; // Рассчитываем фиксированную скорость
+let firstRoundProcent = "%";
+let ferstRoundVh = "vh";
+let coffForTrain = 1;
 
+let fixedMoveSpeed = move_speed * window.innerWidth; // Рассчитываем фиксированную скорость
 
 let bird_props = bird.getBoundingClientRect();
 let background = document.querySelector(".background").getBoundingClientRect();
 let score_val = document.querySelector(".score_val");
 let message = document.querySelector(".message");
+let losemessage = document.querySelector(".losemessage");
 let score_title = document.querySelector(".score_title");
 
 let game_state = "Start";
 img.style.display = "none";
-message.classList.add("messageStyle");
 
 let isJumping = false;
 let isGameOver = false; // добавляем переменную для отслеживания статуса игры
+
+let stoneImages = ["KAMEN_4.png", "KAMEN_5.png", "KAMEN_6.png", "KAMEN_7.png"];
 
 document.body.addEventListener("touchstart", function (e) {
    console.log("Ты тапнул по экрану!");
@@ -30,14 +36,6 @@ document.body.addEventListener("touchstart", function (e) {
       document.querySelectorAll(".pipe_sprite").forEach((elem) => {
          elem.remove();
       });
-      img.style.display = "block";
-      bird.style.top = "20vh";
-      game_state = "Play";
-      message.innerHTML = "";
-      score_title.innerHTML = "Score : ";
-      score_val.innerHTML = "0";
-      message.classList.remove("messageStyle");
-      play();
    }
 
    if (e.touches.length > 0) {
@@ -46,7 +44,7 @@ document.body.addEventListener("touchstart", function (e) {
    }
 });
 
-document.addEventListener("touchend", (e) => {
+document.addEventListener("touchend", () => {
    img.src = "images/DRAKON_LITTLE_1.png";
 });
 
@@ -59,14 +57,6 @@ function handleKeyPress(e) {
          document.querySelectorAll(".pipe_sprite").forEach((e) => {
             e.remove();
          });
-         img.style.display = "block";
-         bird.style.top = "20vh";
-         game_state = "Play";
-         message.innerHTML = "";
-         score_title.innerHTML = "Score : ";
-         score_val.innerHTML = "0";
-         message.classList.remove("messageStyle");
-         play();
       }
 
       if (e.key == "ArrowUp" || e.key == " ") {
@@ -83,6 +73,7 @@ function handleKeyPress(e) {
 
 function play() {
    isGameOver = false;
+   bird.style.top = "30vh";
 
    function move() {
       if (game_state != "Play") return;
@@ -104,17 +95,17 @@ function play() {
                bird_props.top + bird_props.height > pipe_sprite_props.top
             ) {
                game_state = "End";
-               message.innerHTML = "Game Over".fontcolor("red") + "<br>Press Enter or Space To Restart";
-               message.classList.add("messageStyle");
+               losemessage.classList.remove("none");
                isGameOver = true; // Устанавливаем переменную состояния игры в true
                //    sound_die.play();
+
                return;
             } else {
                if (pipe_sprite_props.right < bird_props.left && pipe_sprite_props.right + fixedMoveSpeed >= bird_props.left && element.increase_score == "1") {
                   score_val.innerHTML = +score_val.innerHTML + 1;
                   //   sound_point.play();
                }
-               
+
                element.style.left = pipe_sprite_props.left - fixedMoveSpeed + "px";
             }
          }
@@ -138,7 +129,6 @@ function play() {
          game_state = "End";
          message.style.left = "28vw";
          window.location.reload();
-         message.classList.remove("messageStyle");
          return;
       }
 
@@ -148,38 +138,119 @@ function play() {
    }
    requestAnimationFrame(apply_gravity);
 
-   let pipe_separation = 5;
-   let pipe_gap = 65;
-
    function create_pipe() {
       if (game_state != "Play") return;
+      let pipe_separation = 0; // Объявляем переменную pipe_separation здесь
 
       let pipeInterval = setInterval(() => {
-         if (pipe_separation > 200) {
+         if (pipe_separation > 300) {
             pipe_separation = 0;
 
-            let pipe_posi = Math.floor(Math.random() * 43) + 8;
+            let pipe_posi = Math.floor(Math.random() * (25 - 10 + 1)) + 10;
+
+            // Создаем контейнеры для труб
             let pipe_sprite_inv = document.createElement("div");
             pipe_sprite_inv.className = "pipe_sprite";
-            pipe_sprite_inv.style.top = pipe_posi - 70 + "vh";
+            pipe_sprite_inv.style.top = pipe_posi * coffForTrain - 70 + ferstRoundVh;
             pipe_sprite_inv.style.left = "100vw";
-
             document.body.appendChild(pipe_sprite_inv);
+
             let pipe_sprite = document.createElement("div");
             pipe_sprite.className = "pipe_sprite";
             pipe_sprite.style.top = pipe_posi + pipe_gap + "vh";
             pipe_sprite.style.left = "100vw";
             pipe_sprite.increase_score = "1";
-
             document.body.appendChild(pipe_sprite);
+
+            // Создаем изображение внутри каждого контейнера трубы
+            let pipe_image_inv = document.createElement("img");
+            let randomStoneImage = stoneImages[Math.floor(Math.random() * stoneImages.length)];
+            pipe_image_inv.src = `images/stones/${randomStoneImage}`;
+            pipe_image_inv.style.height = "120%";
+            pipe_image_inv.style.position = "relative";
+            pipe_image_inv.style.top = "-10%";
+            pipe_sprite_inv.appendChild(pipe_image_inv);
+
+            let pipe_image = document.createElement("img");
+            let randomStoneImage2 = stoneImages[Math.floor(Math.random() * stoneImages.length)];
+            pipe_image.src = `images/stones/${randomStoneImage2}`;
+            pipe_image.style.height = "120%";
+            pipe_image.style.position = "relative";
+            pipe_image.style.bottom = "-10%";
+            pipe_sprite.appendChild(pipe_image);
          }
          pipe_separation++;
 
          if (isGameOver) {
-            // проверяем переменную состояния игры
-            clearInterval(pipeInterval); // Останавливаем интервал, если игра закончилась
+            clearInterval(pipeInterval);
          }
-      }, 10); //  Как часто вызывать колонны
+      }, 10);
    }
+
    requestAnimationFrame(create_pipe);
+}
+
+function StartRound() {
+   img.style.display = "block";
+   bird.style.top = "30vh";
+   game_state = "Play";
+   score_title.innerHTML = "Score : ";
+   score_val.innerHTML = "0";
+   message.classList.add("none");
+   img.style.opacity = 1;
+
+
+   // Установка позиции птицы и изменение состояния игры
+   // должны быть выполнены перед вызовом play()
+   play();
+}
+
+// Получаем ссылки на кнопки
+const trainingBtn = document.querySelector("button:nth-of-type(1)");
+const easyBtn = document.querySelector("button:nth-of-type(2)");
+const normalBtn = document.querySelector("button:nth-of-type(3)");
+const hardBtn = document.querySelector("button:nth-of-type(4)");
+
+// Добавляем обработчики событий для каждой кнопки
+trainingBtn.addEventListener("click", () => {
+   pipe_gap = 50;
+   StartRound();
+});
+
+easyBtn.addEventListener("click", () => {
+   gravity = 0.3;
+   move_speed = 0.005;
+   pipe_gap = 60;
+   StartRound();
+});
+
+normalBtn.addEventListener("click", () => {
+   gravity = 0.3;
+   move_speed = 0.005;
+   pipe_gap = 70;
+   ferstRoundVh = "%";
+   coffForTrain = 0;
+   StartRound();
+});
+
+hardBtn.addEventListener("click", () => {
+   gravity = 0.3;
+   move_speed = 0.009;
+   pipe_gap = 40;
+   StartRound();
+});
+
+function goToMenu() {
+   message.classList.remove("none");
+   losemessage.classList.add("none");
+   img.style.opacity = 0;
+   resetGame(); // Добавлен сброс состояния игры и переменных
+   bird.style.top = "30vh";
+   bird_props = bird.getBoundingClientRect();
+}
+
+function resetGame() {
+   isJumping = false;
+   isGameOver = false;
+   game_state = "Start";
 }
