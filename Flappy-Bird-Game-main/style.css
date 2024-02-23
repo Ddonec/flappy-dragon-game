@@ -29,30 +29,28 @@ body {
    top: 40vh;
    left: 100vw;
    height: 70vh;
-   width: 6vw;
+   width: 12vw;
    /* background: gray; */
-   border: 3px solid white;
 }
 
 .pipe_sprite {
    height: 70vh;
-   width: 6vw;
+   width: 12vw;
    /* width: fit-content; 
    height: fit-content;  */
-   border: 2px solid black; /* Обводка черного цвета шириной 2px */
-   border-radius: 10px; /* Закругленные углы контейнера */
+   border-radius: 20px; /* Закругленные углы контейнера */
    overflow: hidden; /* Обрезать содержимое контейнера, которое выходит за его границы */
    background-position: center;
    background-size: cover;
 }
 
 .pipe_sprite img {
-      height: 120%;
-      position: relative;
-      top: -10%;
-      width: 321%;
-      left: 50%;
-      transform: translateX(-50%);
+   height: 120%;
+   position: relative;
+   top: -10%;
+   width: 321%;
+   left: 50%;
+   transform: translateX(-50%);
 }
 body > .pipe_sprite:nth-child(even) > img {
    transform: scaleY(-1) translateX(-50%);
@@ -67,6 +65,12 @@ body > .pipe_sprite:nth-child(even) > img {
    font-size: 4em;
    transform: translate(-50%, -50%);
    text-align: center;
+   display: flex;
+   flex-direction: column;
+   gap: 3vh;
+}
+.message > button {
+   padding: 1vh 0;
 }
 .messageStyle {
    background: white;
