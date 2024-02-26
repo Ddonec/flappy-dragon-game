@@ -11,9 +11,7 @@ let move_speed = 0.005;
 let firstRoundProcent = "%";
 let ferstRoundVh = "vh";
 let coffForTrain = 1;
-
 let fixedMoveSpeed = move_speed * window.innerWidth; 
-
 let bird_props = bird.getBoundingClientRect();
 let background = document.querySelector(".background").getBoundingClientRect();
 let score_val = document.querySelector(".score_val");
@@ -25,8 +23,7 @@ let game_state = "Start";
 img.style.display = "none";
 
 let isJumping = false;
-let isGameOver = false; // добавляем переменную для отслеживания статуса игры
-
+let isGameOver = false; 
 let stoneImages = ["KAMEN_4.png", "KAMEN_5.png", "KAMEN_6.png", "KAMEN_7.png"];
 
 document.body.addEventListener("touchstart", function (e) {
@@ -78,8 +75,6 @@ function play() {
    function move() {
       if (game_state != "Play") return;
 
-      // Устанавливаем фиксированную скорость движения препятствий
-
       let pipe_sprite = document.querySelectorAll(".pipe_sprite");
       pipe_sprite.forEach((element) => {
          let pipe_sprite_props = element.getBoundingClientRect();
@@ -96,7 +91,7 @@ function play() {
             ) {
                game_state = "End";
                losemessage.classList.remove("none");
-               isGameOver = true; // Устанавливаем переменную состояния игры в true
+               isGameOver = true; 
                //    sound_die.play();
 
                return;
@@ -140,7 +135,7 @@ function play() {
 
    function create_pipe() {
       if (game_state != "Play") return;
-      let pipe_separation = 0; // Объявляем переменную pipe_separation здесь
+      let pipe_separation = 0;
 
       let pipeInterval = setInterval(() => {
          if (pipe_separation > 300) {
@@ -148,7 +143,6 @@ function play() {
 
             let pipe_posi = Math.floor(Math.random() * (25 - 10 + 1)) + 10;
 
-            // Создаем контейнеры для труб
             let pipe_sprite_inv = document.createElement("div");
             pipe_sprite_inv.className = "pipe_sprite";
             pipe_sprite_inv.style.top = pipe_posi * coffForTrain - 70 + ferstRoundVh;
@@ -162,7 +156,6 @@ function play() {
             pipe_sprite.increase_score = "1";
             document.body.appendChild(pipe_sprite);
 
-            // Создаем изображение внутри каждого контейнера трубы
             let pipe_image_inv = document.createElement("img");
             let randomStoneImage = stoneImages[Math.floor(Math.random() * stoneImages.length)];
             pipe_image_inv.src = `images/stones/${randomStoneImage}`;
@@ -198,20 +191,14 @@ function StartRound() {
    score_val.innerHTML = "0";
    message.classList.add("none");
    img.style.opacity = 1;
-
-
-   // Установка позиции птицы и изменение состояния игры
-   // должны быть выполнены перед вызовом play()
    play();
 }
 
-// Получаем ссылки на кнопки
 const trainingBtn = document.querySelector("button:nth-of-type(1)");
 const easyBtn = document.querySelector("button:nth-of-type(2)");
 const normalBtn = document.querySelector("button:nth-of-type(3)");
 const hardBtn = document.querySelector("button:nth-of-type(4)");
 
-// Добавляем обработчики событий для каждой кнопки
 trainingBtn.addEventListener("click", () => {
    pipe_gap = 50;
    StartRound();
@@ -244,7 +231,7 @@ function goToMenu() {
    message.classList.remove("none");
    losemessage.classList.add("none");
    img.style.opacity = 0;
-   resetGame(); // Добавлен сброс состояния игры и переменных
+   resetGame(); 
    bird.style.top = "30vh";
    bird_props = bird.getBoundingClientRect();
 }
