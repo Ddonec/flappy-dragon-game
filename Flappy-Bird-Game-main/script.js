@@ -11,9 +11,7 @@ let move_speed = 0.005;
 let firstRoundProcent = "%";
 let ferstRoundVh = "vh";
 let coffForTrain = 1;
-
 let fixedMoveSpeed = move_speed * window.innerWidth; 
-
 let bird_props = bird.getBoundingClientRect();
 let background = document.querySelector(".background").getBoundingClientRect();
 let score_val = document.querySelector(".score_val");
@@ -25,8 +23,7 @@ let game_state = "Start";
 img.style.display = "none";
 
 let isJumping = false;
-let isGameOver = false; // добавляем переменную для отслеживания статуса игры
-
+let isGameOver = false; 
 let stoneImages = ["KAMEN_4.png", "KAMEN_5.png", "KAMEN_6.png", "KAMEN_7.png"];
 
 document.body.addEventListener("touchstart", function (e) {
