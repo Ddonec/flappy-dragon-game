@@ -6,13 +6,13 @@ let img = document.getElementById("bird-1");
 // let sound_die = new Audio("sounds effect/die.mp3");
 
 let gravity = 0.35;
-let pipe_gap = 55; // Объявляем переменную pipe_gap здесь
-let move_speed = 0.005; // Скорость будет относительной ширине экрана
+let pipe_gap = 55;
+let move_speed = 0.005; 
 let firstRoundProcent = "%";
 let ferstRoundVh = "vh";
 let coffForTrain = 1;
 
-let fixedMoveSpeed = move_speed * window.innerWidth; // Рассчитываем фиксированную скорость
+let fixedMoveSpeed = move_speed * window.innerWidth; 
 
 let bird_props = bird.getBoundingClientRect();
 let background = document.querySelector(".background").getBoundingClientRect();
