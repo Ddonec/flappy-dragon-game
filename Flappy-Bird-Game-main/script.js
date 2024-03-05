@@ -18,12 +18,43 @@ let losemessage = document.querySelector(".losemessage");
 let winmessage = document.querySelector(".winmessage");
 let counter = 0;
 
+const trainingBtn = document.querySelector(".button__play_0");
+const easyBtn = document.querySelector(".button__play_1");
+const normalBtn = document.querySelector(".button__play_2");
+const hardBtn = document.querySelector(".button__play_3");
+const easyCount = document.querySelector(".button__count-1");
+const normalCount = document.querySelector(".button__count-2");
+const hardCount = document.querySelector(".button__count-3");
+
 let game_state = "Start";
 bird.style.display = "none";
 
 let isJumping = false;
 let isGameOver = false;
 let stoneImages = ["KAMEN_4.webp", "KAMEN_5.webp", "KAMEN_6.webp", "KAMEN_7.webp"];
+
+let gameData = {};
+function saveToLocalStorage() {
+   gameData = { count1: 2, count2: 2, count3: 2, value1: false, value2: false, value3: false };
+   localStorage.setItem("gameData", JSON.stringify(gameData));
+}
+function loadFromLocalStorage() {
+   const storedData = localStorage.getItem("gameData");
+   if (storedData !== null) {
+      gameData = JSON.parse(storedData);
+   } else {
+      saveToLocalStorage();
+   }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+   loadFromLocalStorage();
+
+   easyCount.textContent = gameData.count1 === 1 ? "1 попытка" : `${gameData.count1} попытки`;
+   normalCount.textContent = gameData.count1 === 1 ? "1 попытка" : `${gameData.count1} попытки`;
+   hardCount.textContent = gameData.count1 === 1 ? "1 попытка" : `${gameData.count1} попытки`;
+
+});
 
 document.body.addEventListener("touchstart", function (e) {
    console.log("Ты тапнул по экрану!");
@@ -192,11 +223,6 @@ function StartRound() {
    bird.style.opacity = 1;
    play();
 }
-
-const trainingBtn = document.querySelector(".button__play_0");
-const easyBtn = document.querySelector(".button__play_1");
-const normalBtn = document.querySelector(".button__play_2");
-const hardBtn = document.querySelector(".button__play_3");
 
 trainingBtn.addEventListener("click", () => {
    pipe_gap = 50;
