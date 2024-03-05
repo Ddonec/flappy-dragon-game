@@ -6,6 +6,11 @@
 }
 body {
    height: 100dvh;
+   position: relative;
+}
+.hideelems > img {
+   width: 1px;
+   height: 1px;
 }
 .background {
    height: 100dvh;
@@ -16,9 +21,19 @@ body {
    -o-background-size: cover;
    background-size: cover;
 }
-.bird {
+.bird,
+.bird2 {
    height: 100px;
    width: 130px;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   z-index: 100;
+   transform: translate(-50%, -50%);
+}
+.bird-container {
+   height: 50px;
+   width: 50px;
    position: fixed;
    top: 40vh;
    left: 10vw;
@@ -96,8 +111,9 @@ body > .pipe_sprite:nth-child(even) > img {
    color: white;
    -webkit-text-stroke-width: 2px;
    -webkit-text-stroke-color: black;
-   top: 0;
-   left: 0;
+   top: 5vh;
+   left: 50%;
+   transform: translateX(-50%);
    margin: 10px;
    font-family: Arial, Helvetica, sans-serif;
 }
@@ -117,12 +133,13 @@ body > .pipe_sprite:nth-child(even) > img {
    .score {
       font-size: 5vh;
    }
-   .bird {
+   .bird,
+   .bird2 {
       width: 120px;
       height: 90px;
    }
 }
-@media (max-width: 7000px) {
+@media (max-width: 700px) {
    .message {
       font-size: 20px;
       top: 50%;
