@@ -21,9 +21,19 @@ body {
    -o-background-size: cover;
    background-size: cover;
 }
-.bird {
+.bird,
+.bird2 {
    height: 100px;
    width: 130px;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   z-index: 100;
+   transform: translate(-50%, -50%);
+}
+.bird-container {
+   height: 50px;
+   width: 50px;
    position: fixed;
    top: 40vh;
    left: 10vw;
@@ -35,7 +45,7 @@ body {
    left: 100vw;
    height: 70vh;
    width: 12vw;
-   background: gray;
+   /* background: gray; */
 }
 
 .pipe_sprite {
@@ -123,12 +133,13 @@ body > .pipe_sprite:nth-child(even) > img {
    .score {
       font-size: 5vh;
    }
-   .bird {
+   .bird,
+   .bird2 {
       width: 120px;
       height: 90px;
    }
 }
-@media (max-width: 7000px) {
+@media (max-width: 700px) {
    .message {
       font-size: 20px;
       top: 50%;

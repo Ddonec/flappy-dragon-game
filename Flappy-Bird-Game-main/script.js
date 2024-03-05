@@ -1,7 +1,9 @@
-const bird = document.querySelector(".bird");
-const img = document.getElementById("bird-1");
+const bird = document.querySelector(".bird-container");
 
-let gravity = 0;
+const bird1Img = document.querySelector(".bird");
+const bird2Img = document.querySelector(".bird2");
+
+let gravity = 0.3;
 let pipe_gap = 55;
 let move_speed = 0.01;
 let firstRoundProcent = "%";
@@ -16,7 +18,7 @@ let losemessage = document.querySelector(".losemessage");
 // let score_title = document.querySelector(".score_title");
 
 let game_state = "Start";
-// img.style.display = "none";
+// bird.style.display = "none";
 
 let isJumping = false;
 let isGameOver = false;
@@ -33,12 +35,14 @@ document.body.addEventListener("touchstart", function (e) {
 
    if (e.touches.length > 0) {
       isJumping = true;
-      img.src = "images/DRAKON_LITTLE_2.webp";
+      // img.src = "images/DRAKON_LITTLE_2.webp";
+      dragonFlyAnimation();
    }
 });
 
 document.addEventListener("touchend", () => {
-   img.src = "images/DRAKON_LITTLE_1.webp";
+   // img.src = "images/DRAKON_LITTLE_1.webp";
+   dragonFlyAnimationDown()
 });
 
 document.addEventListener("keydown", handleKeyPress);
@@ -48,12 +52,14 @@ function handleKeyPress(e) {
    if (e.type === "keydown") {
       if (e.key == "ArrowUp" || e.key == " ") {
          isJumping = true;
-         img.src = "images/DRAKON_LITTLE_2.webp";
+         // img.src = "images/DRAKON_LITTLE_2.webp";
+         dragonFlyAnimation();
       }
    } else if (e.type === "keyup") {
       if (e.key == "ArrowUp" || e.key == " ") {
          isJumping = false;
-         img.src = "images/DRAKON_LITTLE_1.webp";
+         // img.src = "images/DRAKON_LITTLE_1.webp";
+         dragonFlyAnimationDown()
       }
    }
 }
@@ -106,7 +112,8 @@ function play() {
       bird_dy = bird_dy + gravity;
 
       if (isJumping) {
-         img.src = "images/DRAKON_LITTLE_2.webp";
+         // img.src = "images/DRAKON_LITTLE_2.webp";
+         dragonFlyAnimation();
          bird_dy = -6;
          isJumping = false;
       }
@@ -126,7 +133,6 @@ function play() {
 
    function create_pipe() {
       if (game_state != "Play") return;
-      let pipe_separation = 0;
 
       const testValue = () => {
          if (isGameOver) {
@@ -140,13 +146,13 @@ function play() {
          pipe_sprite_inv.className = "pipe_sprite";
          pipe_sprite_inv.style.top = pipe_posi * coffForTrain - 70 + ferstRoundVh;
          pipe_sprite_inv.style.left = "100vw";
-         
+
          let pipe_sprite = document.createElement("div");
          pipe_sprite.className = "pipe_sprite";
          pipe_sprite.style.top = pipe_posi + pipe_gap + "vh";
          pipe_sprite.style.left = "100vw";
          pipe_sprite.increase_score = "1";
-         
+
          let pipe_image_inv = document.createElement("img");
          let randomStoneImage = stoneImages[Math.floor(Math.random() * stoneImages.length)];
          pipe_image_inv.src = `images/stones/${randomStoneImage}`;
@@ -154,7 +160,7 @@ function play() {
          pipe_image_inv.style.position = "relative";
          pipe_image_inv.style.top = "-10%";
          pipe_sprite_inv.appendChild(pipe_image_inv);
-         
+
          let pipe_image = document.createElement("img");
          let randomStoneImage2 = stoneImages[Math.floor(Math.random() * stoneImages.length)];
          pipe_image.src = `images/stones/${randomStoneImage2}`;
@@ -162,25 +168,25 @@ function play() {
          pipe_image.style.position = "relative";
          pipe_image.style.bottom = "-10%";
          pipe_sprite.appendChild(pipe_image);
-         
+
          document.body.appendChild(pipe_sprite_inv);
          document.body.appendChild(pipe_sprite);
          pipe_spriteArr.push(pipe_sprite_inv);
          pipe_spriteArr.push(pipe_sprite);
+      };
+      let pipeInterval = setInterval(testValue, 3000);
    }
-   let pipeInterval = setInterval(testValue, 3000);
-}
 
-requestAnimationFrame(create_pipe);
+   requestAnimationFrame(create_pipe);
 }
 
 function StartRound() {
-   img.style.display = "block";
+   bird.style.display = "block";
    bird.style.top = "30vh";
    game_state = "Play";
    score_val.innerHTML = "0";
    message.classList.add("none");
-   img.style.opacity = 1;
+   bird.style.opacity = 1;
    play();
 }
 
@@ -196,14 +202,12 @@ trainingBtn.addEventListener("click", () => {
 
 easyBtn.addEventListener("click", () => {
    gravity = 0.3;
-   move_speed = 0.005;
    pipe_gap = 60;
    StartRound();
 });
 
 normalBtn.addEventListener("click", () => {
    gravity = 0.3;
-   move_speed = 0.005;
    pipe_gap = 70;
    ferstRoundVh = "%";
    coffForTrain = 0;
@@ -212,7 +216,6 @@ normalBtn.addEventListener("click", () => {
 
 hardBtn.addEventListener("click", () => {
    gravity = 0.3;
-   move_speed = 0.009;
    pipe_gap = 40;
    StartRound();
 });
@@ -220,7 +223,7 @@ hardBtn.addEventListener("click", () => {
 function goToMenu() {
    message.classList.remove("none");
    losemessage.classList.add("none");
-   img.style.opacity = 0;
+   bird.style.opacity = 0;
    resetGame();
    bird.style.top = "30vh";
    bird_props = bird.getBoundingClientRect();
@@ -232,21 +235,14 @@ function resetGame() {
    game_state = "Start";
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function dragonFlyAnimation() {
+   bird1Img.classList.add("none");
+   bird2Img.classList.remove("none");
+}
+function dragonFlyAnimationDown() {
+   bird1Img.classList.remove("none");
+   bird2Img.classList.add("none");
+}
 
 // function create_pipe() {
 //    if (game_state != "Play") return;
