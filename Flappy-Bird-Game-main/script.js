@@ -13,7 +13,7 @@ let background = document.querySelector(".background").getBoundingClientRect();
 let score_val = document.querySelector(".score_val");
 let message = document.querySelector(".message");
 let losemessage = document.querySelector(".losemessage");
-let score_title = document.querySelector(".score_title");
+// let score_title = document.querySelector(".score_title");
 
 let game_state = "Start";
 // img.style.display = "none";
@@ -176,7 +176,7 @@ function StartRound() {
    img.style.display = "block";
    bird.style.top = "30vh";
    game_state = "Play";
-   score_title.innerHTML = "Score : ";
+   // score_title.innerHTML = "Score : ";
    score_val.innerHTML = "0";
    message.classList.add("none");
    img.style.opacity = 1;
