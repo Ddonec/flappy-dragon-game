@@ -7,11 +7,11 @@ let img = document.getElementById("bird-1");
 
 let gravity = 0.35;
 let pipe_gap = 55;
-let move_speed = 0.005; 
+let move_speed = 0.005;
 let firstRoundProcent = "%";
 let ferstRoundVh = "vh";
 let coffForTrain = 1;
-let fixedMoveSpeed = move_speed * window.innerWidth; 
+let fixedMoveSpeed = move_speed * window.innerWidth;
 let bird_props = bird.getBoundingClientRect();
 let background = document.querySelector(".background").getBoundingClientRect();
 let score_val = document.querySelector(".score_val");
@@ -23,7 +23,7 @@ let game_state = "Start";
 img.style.display = "none";
 
 let isJumping = false;
-let isGameOver = false; 
+let isGameOver = false;
 let stoneImages = ["KAMEN_4.png", "KAMEN_5.png", "KAMEN_6.png", "KAMEN_7.png"];
 
 document.body.addEventListener("touchstart", function (e) {
@@ -82,28 +82,32 @@ function play() {
 
          if (pipe_sprite_props.right <= 0) {
             element.remove();
-         } else {
-            if (
-               bird_props.left < pipe_sprite_props.left + pipe_sprite_props.width &&
-               bird_props.left + bird_props.width > pipe_sprite_props.left &&
-               bird_props.top < pipe_sprite_props.top + pipe_sprite_props.height &&
-               bird_props.top + bird_props.height > pipe_sprite_props.top
-            ) {
-               game_state = "End";
-               losemessage.classList.remove("none");
-               isGameOver = true; 
-               //    sound_die.play();
-
-               return;
-            } else {
-               if (pipe_sprite_props.right < bird_props.left && pipe_sprite_props.right + fixedMoveSpeed >= bird_props.left && element.increase_score == "1") {
-                  score_val.innerHTML = +score_val.innerHTML + 1;
-                  //   sound_point.play();
-               }
-
-               element.style.left = pipe_sprite_props.left - fixedMoveSpeed + "px";
-            }
          }
+         //  else
+         // {
+         //    if (
+         //       bird_props.left < pipe_sprite_props.left + pipe_sprite_props.width &&
+         //       bird_props.left + bird_props.width > pipe_sprite_props.left &&
+         //       bird_props.top < pipe_sprite_props.top + pipe_sprite_props.height &&
+         //       bird_props.top + bird_props.height > pipe_sprite_props.top
+         //    ) {
+         //       game_state = "End";
+         //       losemessage.classList.remove("none");
+         //       isGameOver = true;
+         //       //    sound_die.play();
+
+         //       return;
+         //    }
+         //     else
+         //     {
+         //       if (pipe_sprite_props.right < bird_props.left && pipe_sprite_props.right + fixedMoveSpeed >= bird_props.left && element.increase_score == "1") {
+         //          score_val.innerHTML = +score_val.innerHTML + 1;
+         //          //   sound_point.play();
+         //       }
+
+         //       element.style.left = pipe_sprite_props.left - fixedMoveSpeed + "px";
+         //    }
+         // }
       });
       requestAnimationFrame(move);
    }
@@ -231,7 +235,7 @@ function goToMenu() {
    message.classList.remove("none");
    losemessage.classList.add("none");
    img.style.opacity = 0;
-   resetGame(); 
+   resetGame();
    bird.style.top = "30vh";
    bird_props = bird.getBoundingClientRect();
 }
