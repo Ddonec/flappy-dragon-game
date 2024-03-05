@@ -1,5 +1,5 @@
-let bird = document.querySelector(".bird");
-let img = document.getElementById("bird-1");
+const bird = document.querySelector(".bird");
+const img = document.getElementById("bird-1");
 
 let gravity = 0;
 let pipe_gap = 55;
@@ -16,7 +16,7 @@ let losemessage = document.querySelector(".losemessage");
 let score_title = document.querySelector(".score_title");
 
 let game_state = "Start";
-img.style.display = "none";
+// img.style.display = "none";
 
 let isJumping = false;
 let isGameOver = false;
@@ -26,7 +26,7 @@ document.body.addEventListener("touchstart", function (e) {
    console.log("Ты тапнул по экрану!");
 
    if (e.touches.length > 0 && game_state != "Play") {
-      document.querySelectorAll(".pipe_sprite").forEach((elem) => {
+      pipe_spriteArr.forEach((elem) => {
          elem.remove();
       });
    }
@@ -57,33 +57,34 @@ function handleKeyPress(e) {
       }
    }
 }
-
+const pipe_spriteArr = [];
 function play() {
    isGameOver = false;
    bird.style.top = "30vh";
+   // let pipe_sprite = document.querySelectorAll(".pipe_sprite");
 
    function move() {
       if (game_state !== "Play") return;
 
-      let pipe_sprite = document.querySelectorAll(".pipe_sprite");
-      pipe_sprite.forEach((element) => {
+      pipe_spriteArr.forEach((element) => {
          let pipe_sprite_props = element.getBoundingClientRect();
          bird_props = bird.getBoundingClientRect();
 
          if (pipe_sprite_props.right <= 0) {
             element.remove();
+            pipe_spriteArr.splice(pipe_spriteArr.indexOf(element), 1);
          } else {
-            // if (
-            //    bird_props.left < pipe_sprite_props.left + pipe_sprite_props.width &&
-            //    bird_props.left + bird_props.width > pipe_sprite_props.left &&
-            //    bird_props.top < pipe_sprite_props.top + pipe_sprite_props.height &&
-            //    bird_props.top + bird_props.height > pipe_sprite_props.top
-            // ) {
-            //    game_state = "End";
-            //    losemessage.classList.remove("none");
-            //    isGameOver = true;
-            //    return;
-            // }
+            if (
+               bird_props.left < pipe_sprite_props.left + pipe_sprite_props.width &&
+               bird_props.left + bird_props.width > pipe_sprite_props.left &&
+               bird_props.top < pipe_sprite_props.top + pipe_sprite_props.height &&
+               bird_props.top + bird_props.height > pipe_sprite_props.top
+            ) {
+               game_state = "End";
+               losemessage.classList.remove("none");
+               isGameOver = true;
+               return;
+            }
 
             if (pipe_sprite_props.right < bird_props.left && pipe_sprite_props.right + fixedMoveSpeed >= bird_props.left && element.increase_score === "1") {
                score_val.innerHTML = +score_val.innerHTML + 1;
@@ -92,7 +93,7 @@ function play() {
             element.style.left = pipe_sprite_props.left - fixedMoveSpeed + "px";
          }
       });
-      requestAnimationFrame(move);
+      setTimeout(() => requestAnimationFrame(move), 1);
    }
 
    requestAnimationFrame(move);
@@ -125,50 +126,51 @@ function play() {
       if (game_state != "Play") return;
       let pipe_separation = 0;
 
-      let pipeInterval = setInterval(() => {
-         if (pipe_separation > 300) {
-            pipe_separation = 0;
-
-            let pipe_posi = Math.floor(Math.random() * (25 - 10 + 1)) + 10;
-
-            let pipe_sprite_inv = document.createElement("div");
-            pipe_sprite_inv.className = "pipe_sprite";
-            pipe_sprite_inv.style.top = pipe_posi * coffForTrain - 70 + ferstRoundVh;
-            pipe_sprite_inv.style.left = "100vw";
-            document.body.appendChild(pipe_sprite_inv);
-
-            let pipe_sprite = document.createElement("div");
-            pipe_sprite.className = "pipe_sprite";
-            pipe_sprite.style.top = pipe_posi + pipe_gap + "vh";
-            pipe_sprite.style.left = "100vw";
-            pipe_sprite.increase_score = "1";
-            document.body.appendChild(pipe_sprite);
-
-            let pipe_image_inv = document.createElement("img");
-            let randomStoneImage = stoneImages[Math.floor(Math.random() * stoneImages.length)];
-            pipe_image_inv.src = `images/stones/${randomStoneImage}`;
-            pipe_image_inv.style.height = "120%";
-            pipe_image_inv.style.position = "relative";
-            pipe_image_inv.style.top = "-10%";
-            pipe_sprite_inv.appendChild(pipe_image_inv);
-
-            let pipe_image = document.createElement("img");
-            let randomStoneImage2 = stoneImages[Math.floor(Math.random() * stoneImages.length)];
-            pipe_image.src = `images/stones/${randomStoneImage2}`;
-            pipe_image.style.height = "120%";
-            pipe_image.style.position = "relative";
-            pipe_image.style.bottom = "-10%";
-            pipe_sprite.appendChild(pipe_image);
-         }
-         pipe_separation++;
-
+      const testValue = () => {
          if (isGameOver) {
             clearInterval(pipeInterval);
          }
-      }, 10);
-   }
+         // if (pipe_separation > 300) {
+         pipe_separation = 0;
 
-   requestAnimationFrame(create_pipe);
+         let pipe_posi = Math.floor(Math.random() * (25 - 10 + 1)) + 10;
+
+         let pipe_sprite_inv = document.createElement("div");
+         pipe_sprite_inv.className = "pipe_sprite";
+         pipe_sprite_inv.style.top = pipe_posi * coffForTrain - 70 + ferstRoundVh;
+         pipe_sprite_inv.style.left = "100vw";
+         
+         let pipe_sprite = document.createElement("div");
+         pipe_sprite.className = "pipe_sprite";
+         pipe_sprite.style.top = pipe_posi + pipe_gap + "vh";
+         pipe_sprite.style.left = "100vw";
+         pipe_sprite.increase_score = "1";
+         
+         let pipe_image_inv = document.createElement("img");
+         let randomStoneImage = stoneImages[Math.floor(Math.random() * stoneImages.length)];
+         pipe_image_inv.src = `images/stones/${randomStoneImage}`;
+         pipe_image_inv.style.height = "120%";
+         pipe_image_inv.style.position = "relative";
+         pipe_image_inv.style.top = "-10%";
+         pipe_sprite_inv.appendChild(pipe_image_inv);
+         
+         let pipe_image = document.createElement("img");
+         let randomStoneImage2 = stoneImages[Math.floor(Math.random() * stoneImages.length)];
+         pipe_image.src = `images/stones/${randomStoneImage2}`;
+         pipe_image.style.height = "120%";
+         pipe_image.style.position = "relative";
+         pipe_image.style.bottom = "-10%";
+         pipe_sprite.appendChild(pipe_image);
+         
+         document.body.appendChild(pipe_sprite_inv);
+         document.body.appendChild(pipe_sprite);
+         pipe_spriteArr.push(pipe_sprite_inv);
+         pipe_spriteArr.push(pipe_sprite);
+   }
+   let pipeInterval = setInterval(testValue, 3000);
+}
+
+requestAnimationFrame(create_pipe);
 }
 
 function StartRound() {
@@ -209,7 +211,7 @@ normalBtn.addEventListener("click", () => {
 });
 
 hardBtn.addEventListener("click", () => {
-   gravity = 0;
+   gravity = 0.3;
    move_speed = 0.009;
    pipe_gap = 40;
    StartRound();

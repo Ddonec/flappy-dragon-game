@@ -6,6 +6,11 @@
 }
 body {
    height: 100dvh;
+   position: relative;
+}
+.hideelems > img {
+   width: 1px;
+   height: 1px;
 }
 .background {
    height: 100dvh;
