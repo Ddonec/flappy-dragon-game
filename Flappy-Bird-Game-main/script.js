@@ -3,7 +3,7 @@ const img = document.getElementById("bird-1");
 
 let gravity = 0;
 let pipe_gap = 55;
-let move_speed = 0.005;
+let move_speed = 0.01;
 let firstRoundProcent = "%";
 let ferstRoundVh = "vh";
 let coffForTrain = 1;
@@ -93,7 +93,9 @@ function play() {
             element.style.left = pipe_sprite_props.left - fixedMoveSpeed + "px";
          }
       });
-      setTimeout(() => requestAnimationFrame(move), 1);
+      bird_props = bird.getBoundingClientRect();
+
+      requestAnimationFrame(move);
    }
 
    requestAnimationFrame(move);
@@ -176,7 +178,6 @@ function StartRound() {
    img.style.display = "block";
    bird.style.top = "30vh";
    game_state = "Play";
-   // score_title.innerHTML = "Score : ";
    score_val.innerHTML = "0";
    message.classList.add("none");
    img.style.opacity = 1;
@@ -230,3 +231,75 @@ function resetGame() {
    isGameOver = false;
    game_state = "Start";
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function create_pipe() {
+//    if (game_state != "Play") return;
+//    let pipe_separation = 0;
+
+//    const renderTube = () => {
+//       if (isGameOver) {
+//          clearInterval(pipeInterval);
+//       }
+//       pipe_separation = 0;
+
+//       let pipe_posi = Math.floor(Math.random() * (25 - 10 + 1)) + 10;
+
+//       let pipe_sprite_inv = document.createElement("div");
+//       pipe_sprite_inv.className = "pipe_sprite";
+//       pipe_sprite_inv.style.top = pipe_posi * coffForTrain - 70 + ferstRoundVh;
+//       pipe_sprite_inv.style.left = "100vw";
+
+//       let pipe_sprite = document.createElement("div");
+//       pipe_sprite.className = "pipe_sprite";
+//       pipe_sprite.style.top = pipe_posi + pipe_gap + "vh";
+//       pipe_sprite.style.left = "100vw";
+//       pipe_sprite.increase_score = "1";
+
+//       // let pipe_image_inv = document.createElement("img");
+//       // let randomStoneImage = stoneImages[Math.floor(Math.random() * stoneImages.length)];
+//       // pipe_image_inv.src = `images/stones/${randomStoneImage}`;
+//       // pipe_image_inv.style.height = "120%";
+//       // pipe_image_inv.style.position = "relative";
+//       // pipe_image_inv.style.top = "-10%";
+//       // pipe_sprite_inv.appendChild(pipe_image_inv);
+
+//       // let pipe_image = document.createElement("img");
+//       // let randomStoneImage2 = stoneImages[Math.floor(Math.random() * stoneImages.length)];
+//       // pipe_image.src = `images/stones/${randomStoneImage2}`;
+//       // pipe_image.style.height = "120%";
+//       // pipe_image.style.position = "relative";
+//       // pipe_image.style.bottom = "-10%";
+//       // pipe_sprite.appendChild(pipe_image);
+
+//       document.body.appendChild(pipe_sprite_inv);
+//       document.body.appendChild(pipe_sprite);
+//       pipe_spriteArr.push(pipe_sprite_inv);
+//       pipe_spriteArr.push(pipe_sprite);
+
+//       // Move the pipes into view
+//       setTimeout(() => {
+//          pipe_sprite_inv.style.transition = "left 0s";
+//          pipe_sprite.style.transition = "left 0s";
+//          pipe_sprite_inv.style.left = "calc(100vw - 52px)";
+//          pipe_sprite.style.left = "calc(100vw - 52px)";
+//       }, 100);
+//    };
+
+//    let pipeInterval = setInterval(renderTube, 3000);
+// }
