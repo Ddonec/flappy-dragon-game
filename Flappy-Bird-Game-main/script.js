@@ -17,6 +17,7 @@ let message = document.querySelector(".message");
 let losemessage = document.querySelector(".losemessage");
 let winmessage = document.querySelector(".winmessage");
 let counter = 0;
+let idlevel = 0;
 
 const trainingBtn = document.querySelector(".button__play_0");
 const easyBtn = document.querySelector(".button__play_1");
@@ -34,8 +35,11 @@ let isGameOver = false;
 let stoneImages = ["KAMEN_4.webp", "KAMEN_5.webp", "KAMEN_6.webp", "KAMEN_7.webp"];
 
 let gameData = {};
-function saveToLocalStorage() {
+function saveToLocalStoragedefault() {
    gameData = { count1: 2, count2: 2, count3: 2, value1: false, value2: false, value3: false };
+   localStorage.setItem("gameData", JSON.stringify(gameData));
+}
+function saveToLocalStorage() {
    localStorage.setItem("gameData", JSON.stringify(gameData));
 }
 function loadFromLocalStorage() {
@@ -43,17 +47,47 @@ function loadFromLocalStorage() {
    if (storedData !== null) {
       gameData = JSON.parse(storedData);
    } else {
-      saveToLocalStorage();
+      saveToLocalStoragedefault();
    }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
    loadFromLocalStorage();
 
-   easyCount.textContent = gameData.count1 === 1 ? "1 попытка" : `${gameData.count1} попытки`;
-   normalCount.textContent = gameData.count1 === 1 ? "1 попытка" : `${gameData.count1} попытки`;
-   hardCount.textContent = gameData.count1 === 1 ? "1 попытка" : `${gameData.count1} попытки`;
+   // Устанавливаем значения текста счетчиков
+   easyCount.textContent = gameData.count1 === 1 ? `${gameData.count1} попытка` : `${gameData.count1} попытки`;
+   normalCount.textContent = gameData.count2 === 1 ? `${gameData.count2} попытка` : `${gameData.count2} попытки`;
+   hardCount.textContent = gameData.count3 === 1 ? `${gameData.count3} попытка` : `${gameData.count3} попытки`;
 
+   // Проверяем значения переменных value и изменяем src изображений
+   if (gameData.value1) {
+      document.querySelector(".button__img-1").src = "images/coin-card.png";
+      easyBtn.classList.add("none");
+      easyCount.textContent = "+300 баллов";
+   }
+   if (gameData.value2) {
+      document.querySelector(".button__img-2").src = "images/coin-card.png";
+      normalBtn.classList.add("none");
+      normalCount.textContent = "+300 баллов";
+   }
+   if (gameData.value3) {
+      document.querySelector(".button__img-3").src = "images/coin-card.png";
+      hardBtn.classList.add("none");
+      hardCount.textContent = "+300 баллов";
+   }
+
+   if (!gameData.value1 && gameData.count1 <= 0) {
+      easyCount.textContent = "0 баллов";
+      easyBtn.classList.add("none");
+   }
+   if (!gameData.value2 && gameData.count2 <= 0) {
+      normalCount.textContent = "0 баллов";
+      normalBtn.classList.add("none");
+   }
+   if (!gameData.value3 && gameData.count3 <= 0) {
+      hardCount.textContent = "0 баллов";
+      hardBtn.classList.add("none");
+   }
 });
 
 document.body.addEventListener("touchstart", function (e) {
@@ -116,6 +150,11 @@ function play() {
                game_state = "End";
                losemessage.classList.remove("none");
                isGameOver = true;
+               console.log(gameData["count" + idlevel]);
+               gameData["count" + idlevel] -= 1;
+               console.log(gameData);
+               saveToLocalStorage();
+
                return;
             }
 
@@ -128,6 +167,9 @@ function play() {
                game_state = "End";
                winmessage.classList.remove("none");
                isGameOver = true;
+               gameData["value" + idlevel] = true;
+               console.log(gameData);
+               saveToLocalStorage();
             }
 
             element.style.left = pipe_sprite_props.left - fixedMoveSpeed + "px";
@@ -154,7 +196,12 @@ function play() {
       if (bird_props.top <= 0 || bird_props.bottom >= background.bottom) {
          game_state = "End";
          message.style.left = "28vw";
-         window.location.reload();
+         losemessage.classList.remove("none");
+         isGameOver = true;
+         console.log(gameData["count" + idlevel]);
+         gameData["count" + idlevel] -= 1;
+         console.log(gameData);
+         saveToLocalStorage();
          return;
       }
 
@@ -221,17 +268,20 @@ function StartRound() {
    score_val.innerHTML = "0/10";
    message.classList.add("none");
    bird.style.opacity = 1;
+   console.log(idlevel);
    play();
 }
 
 trainingBtn.addEventListener("click", () => {
    pipe_gap = 50;
+   idlevel = 0;
    StartRound();
 });
 
 easyBtn.addEventListener("click", () => {
    gravity = 0.3;
    pipe_gap = 70;
+   idlevel = 1;
    StartRound();
 });
 
@@ -240,24 +290,29 @@ normalBtn.addEventListener("click", () => {
    pipe_gap = 60;
    ferstRoundVh = "%";
    coffForTrain = 0;
+   idlevel = 2;
    StartRound();
 });
 
 hardBtn.addEventListener("click", () => {
    gravity = 0.3;
    pipe_gap = 45;
+   idlevel = 3;
    StartRound();
 });
 
-function goToMenu() {
-   message.classList.remove("none");
-   losemessage.classList.add("none");
-   winmessage.classList.add("none");
-
-   bird.style.opacity = 0;
-   resetGame();
-   bird.style.top = "30vh";
-   bird_props = bird.getBoundingClientRect();
+// function goToMenu() {
+//    message.classList.remove("none");
+//    losemessage.classList.add("none");
+//    winmessage.classList.add("none");
+//    loadFromLocalStorage();
+//    bird.style.opacity = 0;
+//    resetGame();
+//    bird.style.top = "30vh";
+//    bird_props = bird.getBoundingClientRect();
+// }
+function reload() {
+   window.location.reload();
 }
 
 function resetGame() {
