@@ -72,7 +72,7 @@ function play() {
 
          if (pipe_sprite_props.right <= 0) {
             element.remove();
-            pipe_spriteArr.splice(pipe_spriteArr.indexOf(element), 1);
+            // pipe_spriteArr.splice(pipe_spriteArr.indexOf(element), 1);
          } else {
             if (
                bird_props.left < pipe_sprite_props.left + pipe_sprite_props.width &&
@@ -130,7 +130,6 @@ function play() {
          if (isGameOver) {
             clearInterval(pipeInterval);
          }
-         // if (pipe_separation > 300) {
          pipe_separation = 0;
 
          let pipe_posi = Math.floor(Math.random() * (25 - 10 + 1)) + 10;
