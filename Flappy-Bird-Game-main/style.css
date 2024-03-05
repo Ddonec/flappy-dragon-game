@@ -51,6 +51,7 @@ body {
    margin-left: auto;
    cursor: pointer;
    background: white;
+   color: black;
 }
 .level-buttons-area {
    display: flex;
@@ -69,6 +70,7 @@ body {
    flex-direction: column;
    justify-content: space-between;
    align-items: center;
+   position: relative;
 }
 .button__name {
    font-size: 14px;
@@ -92,6 +94,10 @@ body {
 }
 .button__img {
    width: 80%;
+}
+.modal-img {
+   width: 30%;
+   margin: 0 auto;
 }
 .pipe_sprite {
    position: fixed;
@@ -127,10 +133,10 @@ body > .pipe_sprite:nth-child(even) > img {
 .winmessage {
    position: absolute;
    z-index: 10;
-   color: black;
+   color: white;
    top: 50%;
    left: 50%;
-   font-size: 2em;
+   font-size: 14px;
    transform: translate(-50%, -50%);
    text-align: center;
    display: flex;
