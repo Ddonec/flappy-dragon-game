@@ -39,6 +39,57 @@ body {
    left: 10vw;
    z-index: 100;
 }
+.close-app-btn {
+   border: 1px solid black;
+   border-radius: 20px;
+   font-family: jost;
+   font-size: 12px;
+   font-style: italic;
+   padding: 10px;
+   display: flex;
+   width: fit-content;
+   margin-left: auto;
+   cursor: pointer;
+   background: white;
+}
+.level-buttons-area {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-between;
+   font-family: Jost, sans-serif;
+
+   gap: 20px;
+}
+.level-button {
+   background: #393e2a;
+   border-radius: 20px;
+   padding: 5%;
+   width: calc(50% - 10px);
+   gap: 10%;
+}
+.button__name {
+   font-size: 14px;
+   color: white;
+   font-family: Jost, sans-serif;
+}
+.button__count {
+   color: #d29242;
+   font-size: 10px;
+}
+.button__play {
+   display: flex;
+   background: #d29242;
+   width: 100%;
+   justify-content: center;
+   align-items: center;
+   height: 28px;
+   border-radius: 30px;
+   border: none;
+   margin-top: 10px;
+}
+.button__img {
+   width: 80%;
+}
 .pipe_sprite {
    position: fixed;
    top: 40vh;
@@ -76,17 +127,20 @@ body > .pipe_sprite:nth-child(even) > img {
    color: black;
    top: 30%;
    left: 50%;
-   font-size: 4em;
+   font-size: 2em;
    transform: translate(-50%, -50%);
    text-align: center;
    display: flex;
    flex-direction: column;
    gap: 3vh;
 
-   background: white;
+   background: #5a6146;
    padding: 30px;
    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
    border-radius: 5%;
+
+   width: 90%;
+   max-width: 400px;
 }
 .message > button {
    padding: 1vh 0;
@@ -116,7 +170,7 @@ body > .pipe_sprite:nth-child(even) > img {
    font-family: Arial, Helvetica, sans-serif;
 }
 .score_val {
-   color: gold;
+   color: white;
    font-weight: bold;
 }
 .none {

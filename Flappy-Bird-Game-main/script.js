@@ -97,9 +97,6 @@ function play() {
                game_state = "End";
                winmessage.classList.remove("none");
                isGameOver = true;
-               setTimeout(() => {
-                  goToMenu();
-               }, 2000);
             }
 
             element.style.left = pipe_sprite_props.left - fixedMoveSpeed + "px";
@@ -196,10 +193,10 @@ function StartRound() {
    play();
 }
 
-const trainingBtn = document.querySelector("button:nth-of-type(1)");
-const easyBtn = document.querySelector("button:nth-of-type(2)");
-const normalBtn = document.querySelector("button:nth-of-type(3)");
-const hardBtn = document.querySelector("button:nth-of-type(4)");
+const trainingBtn = document.querySelector(".button__play_0");
+const easyBtn = document.querySelector(".button__play_1");
+const normalBtn = document.querySelector(".button__play_2");
+const hardBtn = document.querySelector(".button__play_3");
 
 trainingBtn.addEventListener("click", () => {
    pipe_gap = 50;

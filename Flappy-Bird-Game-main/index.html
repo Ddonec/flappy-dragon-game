@@ -23,23 +23,39 @@
          <img src="images/DRAKON_LITTLE_2.webp" alt="bird-img" class="bird2 none" id="bird-1" />
       </div>
       <div class="message">
-         Press Enter or Space
+         <!-- Press Enter or Space
          <p>Space to Control</p>
-         <p>chose level:</p>
-         <button>Traning</button>
-         <button>Level 1 (Easy)</button>
-         <button>Level 2 (Normal)</button>
-         <button>Level 3 (Hard)</button>
+         <p>chose level:</p> -->
+         <div class="close-app-btn">Закрыть</div>
+         <div class="level-buttons-area">
+            <div class="level-button">
+               <p class="button__name">Тренировка</p>
+               <img class="button__img" src="images/dragon-card.png" alt="" />
+               <p class="button__count">Бесконечно</p>
+               <button class="button__play_0 button__play">Играть</button>
+            </div>
+            <div class="level-button">
+               <p class="button__name">1 уровень</p>
+               <img class="button__img" src="images/dragon-card.png" alt="" />
+               <p class="button__count"></p>
+               <button class="button__play_1 button__play">Играть</button>
+            </div>
+            <div class="level-button">
+               <p class="button__name">2 уровень</p>
+               <img class="button__img" src="images/dragon-card.png" alt="" />
+               <p class="button__count"></p>
+               <button class="button__play_2 button__play">Играть</button>
+            </div>
+            <div class="level-button">
+               <p class="button__name">3 уровень</p>
+               <img class="button__img" src="images/dragon-card.png" alt="" />
+               <p class="button__count"></p>
+               <button class="button__play_3 button__play">Играть</button>
+            </div>
+         </div>
       </div>
-      <div class="losemessage none">
-         You lose
-         <button onclick="goToMenu()">Menu</button>
-      </div>
-      <div class="winmessage none">
-         You Win
-         <button onclick="goToMenu()">Menu</button>
-      </div>
-
+      <div class="losemessage none">К сожалению вы не прошли уровень и исчерпали все попытки, попробуйте удачу на следующем уровне. <button onclick="goToMenu()">Закрыть</button></div>
+      <div class="winmessage none">Ты победил и заработал +300 баллов <button onclick="goToMenu()">Закрыть</button></div>
       <div class="score">
          <span class="score_title"></span>
          <span class="score_val"></span>
