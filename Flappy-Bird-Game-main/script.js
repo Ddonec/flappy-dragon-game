@@ -1,11 +1,7 @@
-// let move_speed = 10;
-// const fixedMoveSpeed = 5;
 let bird = document.querySelector(".bird");
 let img = document.getElementById("bird-1");
-// let sound_point = new Audio("sounds effect/point.mp3");
-// let sound_die = new Audio("sounds effect/die.mp3");
 
-let gravity = 0.35;
+let gravity = 0;
 let pipe_gap = 55;
 let move_speed = 0.005;
 let firstRoundProcent = "%";
@@ -24,7 +20,7 @@ img.style.display = "none";
 
 let isJumping = false;
 let isGameOver = false;
-let stoneImages = ["KAMEN_4.png", "KAMEN_5.png", "KAMEN_6.png", "KAMEN_7.png"];
+let stoneImages = ["KAMEN_4.webp", "KAMEN_5.webp", "KAMEN_6.webp", "KAMEN_7.webp"];
 
 document.body.addEventListener("touchstart", function (e) {
    console.log("Ты тапнул по экрану!");
@@ -37,12 +33,12 @@ document.body.addEventListener("touchstart", function (e) {
 
    if (e.touches.length > 0) {
       isJumping = true;
-      img.src = "images/DRAKON_LITTLE_2.png";
+      img.src = "images/DRAKON_LITTLE_2.webp";
    }
 });
 
 document.addEventListener("touchend", () => {
-   img.src = "images/DRAKON_LITTLE_1.png";
+   img.src = "images/DRAKON_LITTLE_1.webp";
 });
 
 document.addEventListener("keydown", handleKeyPress);
@@ -50,20 +46,14 @@ document.addEventListener("keyup", handleKeyPress);
 
 function handleKeyPress(e) {
    if (e.type === "keydown") {
-      if ((e.key == "Enter" || e.key == " ") && game_state != "Play") {
-         document.querySelectorAll(".pipe_sprite").forEach((e) => {
-            e.remove();
-         });
-      }
-
       if (e.key == "ArrowUp" || e.key == " ") {
          isJumping = true;
-         img.src = "images/DRAKON_LITTLE_2.png";
+         img.src = "images/DRAKON_LITTLE_2.webp";
       }
    } else if (e.type === "keyup") {
       if (e.key == "ArrowUp" || e.key == " ") {
          isJumping = false;
-         img.src = "images/DRAKON_LITTLE_1.png";
+         img.src = "images/DRAKON_LITTLE_1.webp";
       }
    }
 }
@@ -73,7 +63,7 @@ function play() {
    bird.style.top = "30vh";
 
    function move() {
-      if (game_state != "Play") return;
+      if (game_state !== "Play") return;
 
       let pipe_sprite = document.querySelectorAll(".pipe_sprite");
       pipe_sprite.forEach((element) => {
@@ -82,35 +72,29 @@ function play() {
 
          if (pipe_sprite_props.right <= 0) {
             element.remove();
+         } else {
+            // if (
+            //    bird_props.left < pipe_sprite_props.left + pipe_sprite_props.width &&
+            //    bird_props.left + bird_props.width > pipe_sprite_props.left &&
+            //    bird_props.top < pipe_sprite_props.top + pipe_sprite_props.height &&
+            //    bird_props.top + bird_props.height > pipe_sprite_props.top
+            // ) {
+            //    game_state = "End";
+            //    losemessage.classList.remove("none");
+            //    isGameOver = true;
+            //    return;
+            // }
+
+            if (pipe_sprite_props.right < bird_props.left && pipe_sprite_props.right + fixedMoveSpeed >= bird_props.left && element.increase_score === "1") {
+               score_val.innerHTML = +score_val.innerHTML + 1;
+            }
+
+            element.style.left = pipe_sprite_props.left - fixedMoveSpeed + "px";
          }
-         //  else
-         // {
-         //    if (
-         //       bird_props.left < pipe_sprite_props.left + pipe_sprite_props.width &&
-         //       bird_props.left + bird_props.width > pipe_sprite_props.left &&
-         //       bird_props.top < pipe_sprite_props.top + pipe_sprite_props.height &&
-         //       bird_props.top + bird_props.height > pipe_sprite_props.top
-         //    ) {
-         //       game_state = "End";
-         //       losemessage.classList.remove("none");
-         //       isGameOver = true;
-         //       //    sound_die.play();
-
-         //       return;
-         //    }
-         //     else
-         //     {
-         //       if (pipe_sprite_props.right < bird_props.left && pipe_sprite_props.right + fixedMoveSpeed >= bird_props.left && element.increase_score == "1") {
-         //          score_val.innerHTML = +score_val.innerHTML + 1;
-         //          //   sound_point.play();
-         //       }
-
-         //       element.style.left = pipe_sprite_props.left - fixedMoveSpeed + "px";
-         //    }
-         // }
       });
       requestAnimationFrame(move);
    }
+
    requestAnimationFrame(move);
 
    let bird_dy = 0;
@@ -119,7 +103,7 @@ function play() {
       bird_dy = bird_dy + gravity;
 
       if (isJumping) {
-         img.src = "images/DRAKON_LITTLE_2.png";
+         img.src = "images/DRAKON_LITTLE_2.webp";
          bird_dy = -6;
          isJumping = false;
       }
@@ -225,7 +209,7 @@ normalBtn.addEventListener("click", () => {
 });
 
 hardBtn.addEventListener("click", () => {
-   gravity = 0.3;
+   gravity = 0;
    move_speed = 0.009;
    pipe_gap = 40;
    StartRound();
