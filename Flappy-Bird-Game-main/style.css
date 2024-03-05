@@ -45,18 +45,15 @@ body {
    left: 100vw;
    height: 70vh;
    width: 12vw;
-   /* background: gray; */
-}
-
-.pipe_sprite {
-   height: 70vh;
-   width: 12vw;
    /* width: fit-content; 
    height: fit-content;  */
    border-radius: 20px; /* Закругленные углы контейнера */
    overflow: hidden; /* Обрезать содержимое контейнера, которое выходит за его границы */
    background-position: center;
    background-size: cover;
+
+   -webkit-filter: drop-shadow(12px 12px 7px rgba(247, 247, 247, 0.5));
+   filter: drop-shadow(0px 0px 15px #fafafa);
 }
 
 .pipe_sprite img {
@@ -72,7 +69,8 @@ body > .pipe_sprite:nth-child(even) > img {
 }
 
 .message,
-.losemessage {
+.losemessage,
+.winmessage {
    position: absolute;
    z-index: 10;
    color: black;
