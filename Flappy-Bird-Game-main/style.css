@@ -230,7 +230,7 @@ body > .pipe_sprite:nth-child(even) > img {
    }
 }
 
-@media screen and (orientation: landscape) {
+@media screen and (max-height: 500px) and (orientation: landscape) {
    .button__img {
       width: 40%;
    }
