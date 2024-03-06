@@ -198,7 +198,7 @@ function play() {
          isJumping = false;
       }
 
-      if ((bird_props.bottom <= 0 || bird_props.top >= background.bottom) && isGameOver === false && game_state != "End") {
+      if ((bird_props.bottom <= 0 || bird_props.top >= window.innerHeight) && isGameOver === false && game_state != "End") {
          game_state = "End";
          message.style.left = "28vw";
          losemessage.classList.remove("none");
