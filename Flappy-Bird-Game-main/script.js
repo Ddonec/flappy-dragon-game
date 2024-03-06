@@ -11,7 +11,7 @@ let ferstRoundVh = "vh";
 let coffForTrain = 1;
 let fixedMoveSpeed = move_speed * window.innerWidth;
 let bird_props = bird.getBoundingClientRect();
-let background = document.querySelector(".background").getBoundingClientRect();
+let background = document.querySelector(".background");
 let score_val = document.querySelector(".score_val");
 let message = document.querySelector(".message");
 let losemessage = document.querySelector(".losemessage");
@@ -146,6 +146,7 @@ function play() {
             ) {
                game_state = "End";
                losemessage.classList.remove("none");
+               background.style.animationPlayState = "paused";
                isGameOver = true;
                if ((idlevel == 1 && gameData.count1 > 1) || (idlevel == 2 && gameData.count2 > 1) || (idlevel == 3 && gameData.count3 > 1)) {
                   losemessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" /> Вы врезались, еще есть попытка, но попробуйте сначала на тренировке <button class="button__play" onclick="reload()">Закрыть</button>`;
@@ -171,7 +172,7 @@ function play() {
                if (idlevel == 0) {
                   winmessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" /> Ты прошел тренировку <button class="button__play" onclick="reload()">Закрыть</button>`;
                }
-
+               background.style.animationPlayState = "paused";
                winmessage.classList.remove("none");
                bird.style.display = "none";
                isGameOver = true;
@@ -204,6 +205,7 @@ function play() {
       if ((bird_props.bottom <= 0 || bird_props.top >= window.innerHeight) && isGameOver === false && game_state != "End") {
          game_state = "End";
          message.style.left = "28vw";
+         background.style.animationPlayState = "paused";
          losemessage.classList.remove("none");
          if ((idlevel == 1 && gameData.count1 > 1) || (idlevel == 2 && gameData.count2 > 1) || (idlevel == 3 && gameData.count3 > 1)) {
             losemessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" />
@@ -284,6 +286,7 @@ function StartRound() {
    message.classList.add("none");
    bird.style.opacity = 1;
    console.log(idlevel);
+   background.classList.add("bg-animation");
    play();
 }
 
@@ -304,11 +307,13 @@ easyBtn.addEventListener("click", () => {
 normalBtn.addEventListener("click", () => {
    pipe_gap = 60;
    idlevel = 2;
+   background.classList.add("bg-2");
    StartRound();
 });
 
 hardBtn.addEventListener("click", () => {
    pipe_gap = 45;
+   background.classList.add("bg-3");
    idlevel = 3;
    StartRound();
 });
