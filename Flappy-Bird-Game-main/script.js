@@ -199,23 +199,23 @@ function play() {
          isJumping = false;
       }
 
-      // if (bird_props.top <= 0 || bird_props.bottom >= background.bottom) {
-      //    if (game_state === "Play") {
-      //       game_state = "End";
-      //       message.style.left = "28vw";
-      //       losemessage.classList.remove("none");
-      //       if ((idlevel == 1 && gameData.count1 > 1) || (idlevel == 2 && gameData.count2 > 1) || (idlevel == 3 && gameData.count3 > 1)) {
-      //          losemessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" />
-      //          Вы врезались, top/bottom<><>>_< еще есть попытка, но попробуйте сначала на тренировке <button class="button__play" onclick="reload()">Закрыть</button>`;
-      //       }
-      //       isGameOver = true;
-      //       console.log(gameData["count" + idlevel]);
-      //       gameData["count" + idlevel] -= 1;
-      //       console.log(gameData);
-      //       saveToLocalStorage();
-      //    }
-      //    return;
-      // }
+      if (bird_props.bottom <= 0 || bird_props.top >= background.bottom) {
+         if (game_state === "Play") {
+            game_state = "End";
+            message.style.left = "28vw";
+            losemessage.classList.remove("none");
+            if ((idlevel == 1 && gameData.count1 > 1) || (idlevel == 2 && gameData.count2 > 1) || (idlevel == 3 && gameData.count3 > 1)) {
+               losemessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" />
+               Вы врезались, top/bottom<><>>_< еще есть попытка, но попробуйте сначала на тренировке <button class="button__play" onclick="reload()">Закрыть</button>`;
+            }
+            isGameOver = true;
+            console.log(gameData["count" + idlevel]);
+            gameData["count" + idlevel] -= 1;
+            console.log(gameData);
+            saveToLocalStorage();
+         }
+         return;
+      }
 
       bird.style.top = bird_props.top + bird_dy + "px";
       bird_props = bird.getBoundingClientRect();
