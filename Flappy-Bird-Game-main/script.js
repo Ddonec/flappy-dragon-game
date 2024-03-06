@@ -18,6 +18,7 @@ let losemessage = document.querySelector(".losemessage");
 let winmessage = document.querySelector(".winmessage");
 let counter = 0;
 let idlevel = 0;
+const pipe_spriteArr = [];
 
 const trainingBtn = document.querySelector(".button__play_0");
 const easyBtn = document.querySelector(".button__play_1");
@@ -36,7 +37,7 @@ let stoneImages = ["KAMEN_4.webp", "KAMEN_5.webp", "KAMEN_6.webp", "KAMEN_7.webp
 
 let gameData = {};
 function saveToLocalStoragedefault() {
-   gameData = { count1: 2, count2: 2, count3: 2, value1: false, value2: false, value3: false };
+   gameData = { count0: 100, count1: 2, count2: 2, count3: 2, value0: true, value1: false, value2: false, value3: false };
    localStorage.setItem("gameData", JSON.stringify(gameData));
 }
 function saveToLocalStorage() {
@@ -54,12 +55,10 @@ function loadFromLocalStorage() {
 document.addEventListener("DOMContentLoaded", function () {
    loadFromLocalStorage();
 
-   // Устанавливаем значения текста счетчиков
    easyCount.textContent = gameData.count1 === 1 ? `${gameData.count1} попытка` : `${gameData.count1} попытки`;
    normalCount.textContent = gameData.count2 === 1 ? `${gameData.count2} попытка` : `${gameData.count2} попытки`;
    hardCount.textContent = gameData.count3 === 1 ? `${gameData.count3} попытка` : `${gameData.count3} попытки`;
 
-   // Проверяем значения переменных value и изменяем src изображений
    if (gameData.value1) {
       document.querySelector(".button__img-1").src = "images/coin-card.png";
       easyBtn.classList.add("none");
@@ -125,7 +124,6 @@ function handleKeyPress(e) {
       }
    }
 }
-const pipe_spriteArr = [];
 function play() {
    isGameOver = false;
    bird.style.top = "30vh";
@@ -139,7 +137,6 @@ function play() {
 
          if (pipe_sprite_props.right <= 0) {
             element.remove();
-            // pipe_spriteArr.splice(pipe_spriteArr.indexOf(element), 1);
          } else {
             if (
                bird_props.left < pipe_sprite_props.left + pipe_sprite_props.width &&
@@ -149,10 +146,13 @@ function play() {
             ) {
                game_state = "End";
                losemessage.classList.remove("none");
-               if ((idlevel == 1 && gameData.count1 > 1) || (idlevel == 2 && gameData.count2 > 1) || (idlevel == 3 && gameData.count3 > 1)) {
-                  losemessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" />Вы врезались, еще есть попытка, но попробуйте сначала на тренировке <button class="button__play" onclick="reload()">Закрыть</button>`;
-               }
                isGameOver = true;
+               if ((idlevel == 1 && gameData.count1 > 1) || (idlevel == 2 && gameData.count2 > 1) || (idlevel == 3 && gameData.count3 > 1)) {
+                  losemessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" /> Вы врезались, еще есть попытка, но попробуйте сначала на тренировке <button class="button__play" onclick="reload()">Закрыть</button>`;
+               }
+               if (idlevel === 0) {
+                  losemessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" /> Вы врезались, потренеруйтесь ещё <button class="button__play" onclick="reload()">Закрыть</button>`;
+               }
                console.log(gameData["count" + idlevel]);
                gameData["count" + idlevel] -= 1;
                console.log(gameData);
@@ -166,10 +166,10 @@ function play() {
                score_val.innerHTML = `${counter}/10`; // Обновляем значение в HTML
             }
 
-            if (counter >= 1) {
+            if (counter >= 10) {
                game_state = "End";
                if (idlevel == 0) {
-                  winmessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" />Ты прошел тренировку <button class="button__play" onclick="reload()">Закрыть</button>`;
+                  winmessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" /> Ты прошел тренировку <button class="button__play" onclick="reload()">Закрыть</button>`;
                }
 
                winmessage.classList.remove("none");
@@ -201,13 +201,16 @@ function play() {
          isJumping = false;
       }
 
-      if (bird_props.top <= 0 || bird_props.bottom >= background.bottom) {
+      if ((bird_props.bottom <= 0 || bird_props.top >= window.innerHeight) && isGameOver === false && game_state != "End") {
          game_state = "End";
          message.style.left = "28vw";
          losemessage.classList.remove("none");
          if ((idlevel == 1 && gameData.count1 > 1) || (idlevel == 2 && gameData.count2 > 1) || (idlevel == 3 && gameData.count3 > 1)) {
             losemessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" />
-            Вы врезались, еще есть попытка, но попробуйте сначала на тренировке <button class="button__play" onclick="reload()">Закрыть</button>`;
+               Вы вышли за пределы экрана, еще есть попытка, но попробуйте сначала на тренировке <button class="button__play" onclick="reload()">Закрыть</button>`;
+         } else {
+            losemessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" />
+               Вы вышли за пределы экрана, потренируйтесь ещё <button class="button__play" onclick="reload()">Закрыть</button>`;
          }
          isGameOver = true;
          console.log(gameData["count" + idlevel]);
