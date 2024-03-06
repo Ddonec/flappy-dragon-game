@@ -150,6 +150,9 @@ function play() {
                if ((idlevel == 1 && gameData.count1 > 1) || (idlevel == 2 && gameData.count2 > 1) || (idlevel == 3 && gameData.count3 > 1)) {
                   losemessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" /> Вы врезались, еще есть попытка, но попробуйте сначала на тренировке <button class="button__play" onclick="reload()">Закрыть</button>`;
                }
+               if (idlevel === 0) {
+                  losemessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" /> Вы врезались, потренеруйтесь ещё <button class="button__play" onclick="reload()">Закрыть</button>`;
+               }
                console.log(gameData["count" + idlevel]);
                gameData["count" + idlevel] -= 1;
                console.log(gameData);
@@ -163,7 +166,7 @@ function play() {
                score_val.innerHTML = `${counter}/10`; // Обновляем значение в HTML
             }
 
-            if (counter >= 1) {
+            if (counter >= 10) {
                game_state = "End";
                if (idlevel == 0) {
                   winmessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" /> Ты прошел тренировку <button class="button__play" onclick="reload()">Закрыть</button>`;
