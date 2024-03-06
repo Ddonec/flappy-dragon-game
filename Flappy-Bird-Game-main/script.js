@@ -36,7 +36,7 @@ let stoneImages = ["KAMEN_4.webp", "KAMEN_5.webp", "KAMEN_6.webp", "KAMEN_7.webp
 
 let gameData = {};
 function saveToLocalStoragedefault() {
-   gameData = { count1: 2, count2: 2, count3: 2, value1: false, value2: false, value3: false };
+   gameData = { count0: 100, count1: 2, count2: 2, count3: 2, value0: true, value1: false, value2: false, value3: false };
    localStorage.setItem("gameData", JSON.stringify(gameData));
 }
 function saveToLocalStorage() {
@@ -194,21 +194,21 @@ function play() {
    function apply_gravity() {
       if (game_state != "Play") return;
       bird_dy = bird_dy + gravity;
-   
+
       if (isJumping) {
          dragonFlyAnimation();
          bird_dy = -6;
          isJumping = false;
       }
-   
+
       if (bird_props.top <= 0 || bird_props.bottom >= background.bottom) {
-         if (game_state === "Play") { 
+         if (game_state === "Play") {
             game_state = "End";
             message.style.left = "28vw";
             losemessage.classList.remove("none");
             if ((idlevel == 1 && gameData.count1 > 1) || (idlevel == 2 && gameData.count2 > 1) || (idlevel == 3 && gameData.count3 > 1)) {
                losemessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" />
-               Вы врезались, еще есть попытка, но попробуйте сначала на тренировке <button class="button__play" onclick="reload()">Закрыть</button>`;
+               Вы врезались, top/bottom<><>>_< еще есть попытка, но попробуйте сначала на тренировке <button class="button__play" onclick="reload()">Закрыть</button>`;
             }
             isGameOver = true;
             console.log(gameData["count" + idlevel]);
@@ -218,7 +218,7 @@ function play() {
          }
          return;
       }
-   
+
       bird.style.top = bird_props.top + bird_dy + "px";
       bird_props = bird.getBoundingClientRect();
       requestAnimationFrame(apply_gravity);
