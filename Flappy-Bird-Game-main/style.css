@@ -113,6 +113,7 @@ body {
    border-radius: 30px;
    border: none;
    margin-top: 10px;
+   color: black;
 }
 .button__img {
    width: 80%;
