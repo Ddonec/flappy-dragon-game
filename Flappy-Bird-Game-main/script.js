@@ -20,7 +20,6 @@ let counter = 0;
 let idlevel = 0;
 const pipe_spriteArr = [];
 
-
 const trainingBtn = document.querySelector(".button__play_0");
 const easyBtn = document.querySelector(".button__play_1");
 const normalBtn = document.querySelector(".button__play_2");
@@ -149,7 +148,7 @@ function play() {
                losemessage.classList.remove("none");
                isGameOver = true;
                if ((idlevel == 1 && gameData.count1 > 1) || (idlevel == 2 && gameData.count2 > 1) || (idlevel == 3 && gameData.count3 > 1)) {
-                  losemessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" /> Collizium!!!! ><<>>< Вы врезались, еще есть попытка, но попробуйте сначала на тренировке <button class="button__play" onclick="reload()">Закрыть</button>`;
+                  losemessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" /> Вы врезались, еще есть попытка, но попробуйте сначала на тренировке <button class="button__play" onclick="reload()">Закрыть</button>`;
                }
                console.log(gameData["count" + idlevel]);
                gameData["count" + idlevel] -= 1;
@@ -167,7 +166,7 @@ function play() {
             if (counter >= 1) {
                game_state = "End";
                if (idlevel == 0) {
-                  winmessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" /> WINNER!!!!  ><><><Ты прошел тренировку <button class="button__play" onclick="reload()">Закрыть</button>`;
+                  winmessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" /> Ты прошел тренировку <button class="button__play" onclick="reload()">Закрыть</button>`;
                }
 
                winmessage.classList.remove("none");
@@ -206,7 +205,10 @@ function play() {
             losemessage.classList.remove("none");
             if ((idlevel == 1 && gameData.count1 > 1) || (idlevel == 2 && gameData.count2 > 1) || (idlevel == 3 && gameData.count3 > 1)) {
                losemessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" />
-               Вы врезались, top/bottom<><>>_< еще есть попытка, но попробуйте сначала на тренировке <button class="button__play" onclick="reload()">Закрыть</button>`;
+               Вы вышли за пределы экрана, еще есть попытка, но попробуйте сначала на тренировке <button class="button__play" onclick="reload()">Закрыть</button>`;
+            } else {
+               losemessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" />
+               Вы вышли за пределы экрана, потренируйтесь ещё <button class="button__play" onclick="reload()">Закрыть</button>`;
             }
             isGameOver = true;
             console.log(gameData["count" + idlevel]);
