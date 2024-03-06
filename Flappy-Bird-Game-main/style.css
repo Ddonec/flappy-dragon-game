@@ -15,12 +15,34 @@ body {
 .background {
    height: 100dvh;
    width: 100vw;
-   background: url("images/bg-dungeon.jpeg") no-repeat center center fixed;
+   background: url("images/bg-dungeon.jpeg") no-repeat;
    -webkit-background-size: cover;
    -moz-background-size: cover;
    -o-background-size: cover;
    background-size: cover;
 }
+
+.bg-animation {
+   animation: bg-move 100s linear infinite;
+}
+.bg-1 {
+   background-image: url(images/FON_1_1.webp);
+}
+.bg-2 {
+   background-image: url(images/FON_1_2.webp);
+}
+.bg-3 {
+   background-image: url(images/FON_1_3.webp);
+}
+@keyframes bg-move {
+   form {
+      background-position: left;
+   }
+   to {
+      background-position: right;
+   }
+}
+
 .bird,
 .bird2 {
    height: 100px;
@@ -205,5 +227,17 @@ body > .pipe_sprite:nth-child(even) > img {
       font-size: 20px;
       top: 50%;
       white-space: nowrap;
+   }
+}
+
+@media screen and (orientation: landscape) {
+   .button__img {
+      width: 40%;
+   }
+   .message {
+      flex-direction: row-reverse;
+   }
+   .close-app-btn {
+      height: fit-content;
    }
 }
