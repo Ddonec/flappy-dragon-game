@@ -198,24 +198,22 @@ function play() {
          isJumping = false;
       }
 
-      if (bird_props.bottom <= 0 || bird_props.top >= background.bottom) {
-         if (game_state === "Play") {
-            game_state = "End";
-            message.style.left = "28vw";
-            losemessage.classList.remove("none");
-            if ((idlevel == 1 && gameData.count1 > 1) || (idlevel == 2 && gameData.count2 > 1) || (idlevel == 3 && gameData.count3 > 1)) {
-               losemessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" />
+      if ((bird_props.bottom <= 0 || bird_props.top >= background.bottom) && isGameOver === false && game_state != "End") {
+         game_state = "End";
+         message.style.left = "28vw";
+         losemessage.classList.remove("none");
+         if ((idlevel == 1 && gameData.count1 > 1) || (idlevel == 2 && gameData.count2 > 1) || (idlevel == 3 && gameData.count3 > 1)) {
+            losemessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" />
                Вы вышли за пределы экрана, еще есть попытка, но попробуйте сначала на тренировке <button class="button__play" onclick="reload()">Закрыть</button>`;
-            } else {
-               losemessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" />
+         } else {
+            losemessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" />
                Вы вышли за пределы экрана, потренируйтесь ещё <button class="button__play" onclick="reload()">Закрыть</button>`;
-            }
-            isGameOver = true;
-            console.log(gameData["count" + idlevel]);
-            gameData["count" + idlevel] -= 1;
-            console.log(gameData);
-            saveToLocalStorage();
          }
+         isGameOver = true;
+         console.log(gameData["count" + idlevel]);
+         gameData["count" + idlevel] -= 1;
+         console.log(gameData);
+         saveToLocalStorage();
          return;
       }
 
