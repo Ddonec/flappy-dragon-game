@@ -150,7 +150,7 @@ function play() {
                game_state = "End";
                losemessage.classList.remove("none");
                if ((idlevel == 1 && gameData.count1 > 1) || (idlevel == 2 && gameData.count2 > 1) || (idlevel == 3 && gameData.count3 > 1)) {
-                  losemessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" />Вы врезались, еще есть попытка, но попробуйте сначала на тренировке <button class="button__play" onclick="reload()">Закрыть</button>`;
+                  losemessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" /> Collizium!!!! ><<>>< Вы врезались, еще есть попытка, но попробуйте сначала на тренировке <button class="button__play" onclick="reload()">Закрыть</button>`;
                }
                isGameOver = true;
                console.log(gameData["count" + idlevel]);
@@ -169,7 +169,7 @@ function play() {
             if (counter >= 1) {
                game_state = "End";
                if (idlevel == 0) {
-                  winmessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" />Ты прошел тренировку <button class="button__play" onclick="reload()">Закрыть</button>`;
+                  winmessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" /> WINNER!!!!  ><><><Ты прошел тренировку <button class="button__play" onclick="reload()">Закрыть</button>`;
                }
 
                winmessage.classList.remove("none");
