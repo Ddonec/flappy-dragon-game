@@ -163,10 +163,10 @@ function play() {
 
             if (pipe_sprite_props.right < bird_props.left && pipe_sprite_props.right + fixedMoveSpeed >= bird_props.left && element.increase_score === "1") {
                counter += 1; // Увеличиваем значение counter на 1
-               score_val.innerHTML = `${counter}/10`; // Обновляем значение в HTML
+               score_val.innerHTML = `${counter}/30`; // Обновляем значение в HTML
             }
 
-            if (counter >= 10) {
+            if (counter >= 30) {
                game_state = "End";
                if (idlevel == 0) {
                   winmessage.innerHTML = `<img class="modal-img" src="images/dragon-card.png" alt="" /> Ты прошел тренировку <button class="button__play" onclick="reload()">Закрыть</button>`;
@@ -280,7 +280,7 @@ function StartRound() {
    bird.style.top = "30vh";
    game_state = "Play";
    counter = 0;
-   score_val.innerHTML = "0/10";
+   score_val.innerHTML = "0/30";
    message.classList.add("none");
    bird.style.opacity = 1;
    console.log(idlevel);
