@@ -89,6 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
    }
 });
 
+
 document.body.addEventListener("touchstart", function (e) {
    console.log("Ты тапнул по экрану!");
 
@@ -297,7 +298,7 @@ trainingBtn.addEventListener("click", () => {
 });
 
 easyBtn.addEventListener("click", () => {
-   pipe_gap = 70;
+   pipe_gap = 50;
    ferstRoundVh = "%";
    coffForTrain = 0;
    idlevel = 1;
