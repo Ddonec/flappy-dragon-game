@@ -37,7 +37,7 @@ let stoneImages = ["KAMEN_4.webp", "KAMEN_5.webp", "KAMEN_6.webp", "KAMEN_7.webp
 
 let gameData = {};
 function saveToLocalStoragedefault() {
-   gameData = { count0: 100, count1: 2, count2: 2, count3: 2, value0: true, value1: false, value2: false, value3: false };
+   gameData = { count0: 100, count1: 20, count2: 20, count3: 20, value0: true, value1: false, value2: false, value3: false };
    localStorage.setItem("gameData", JSON.stringify(gameData));
 }
 function saveToLocalStorage() {
@@ -300,7 +300,7 @@ trainingBtn.addEventListener("click", () => {
 easyBtn.addEventListener("click", () => {
    pipe_gap = 50;
    ferstRoundVh = "%";
-   coffForTrain = 0;
+   coffForTrain = -1;
    idlevel = 1;
    StartRound();
 });
