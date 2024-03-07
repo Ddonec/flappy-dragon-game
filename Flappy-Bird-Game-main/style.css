@@ -242,3 +242,20 @@ body > .pipe_sprite:nth-child(even) > img {
       height: fit-content;
    }
 }
+
+@media (min-width: 900px) {
+   .bird,
+   .bird2 {
+      height: 200px;
+      width: 260px;
+   }
+   .message,
+   .losemessage,
+   .winmessage {
+      font-size: 24px;
+   }
+   .losemessage > button {
+      padding: 20px 0;
+      font-size: 20px;
+   }
+}
