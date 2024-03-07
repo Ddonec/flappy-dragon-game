@@ -254,17 +254,17 @@ function play() {
          let pipe_image_inv = document.createElement("img");
          let randomStoneImage = stoneImages[Math.floor(Math.random() * stoneImages.length)];
          pipe_image_inv.src = `images/stones/${randomStoneImage}`;
-         pipe_image_inv.style.height = "120%";
+         pipe_image_inv.style.height = "110%";
          pipe_image_inv.style.position = "relative";
-         pipe_image_inv.style.top = "-10%";
+         pipe_image_inv.style.top = "-2%";
          pipe_sprite_inv.appendChild(pipe_image_inv);
 
          let pipe_image = document.createElement("img");
          let randomStoneImage2 = stoneImages[Math.floor(Math.random() * stoneImages.length)];
          pipe_image.src = `images/stones/${randomStoneImage2}`;
-         pipe_image.style.height = "120%";
+         pipe_image.style.height = "110%";
          pipe_image.style.position = "relative";
-         pipe_image.style.bottom = "-10%";
+         pipe_image.style.top = "-5%";
          pipe_sprite.appendChild(pipe_image);
 
          document.body.appendChild(pipe_sprite_inv);

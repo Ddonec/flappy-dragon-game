@@ -131,7 +131,6 @@ body {
    /* width: fit-content; 
    height: fit-content;  */
    border-radius: 20px; /* Закругленные углы контейнера */
-   overflow: hidden; /* Обрезать содержимое контейнера, которое выходит за его границы */
    background-position: center;
    background-size: cover;
 
